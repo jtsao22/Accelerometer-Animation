@@ -8,3 +8,7 @@ ex_write: ex_write.cpp
 	$(CXX) $(CXXFLAGS) $(INCPATH) $(LFLAGS) $(LIBS) -o ex_write ex_write.cpp
 ex_read: ex_read.cpp
 	$(CXX) $(CXXFLAGS) $(INCPATH) $(LFLAGS) $(LIBS) -o ex_read ex_read.cpp
+ex_sensor: ex_sensor.cpp
+	$(CXX) $(CXXFLAGS) $(INCPATH) $(LFLAGS) $(LIBS) -o ex_sensor ex_sensor.cpp
+ex_engine: ex_engine.cpp
+	$(CXX) $(CXXFLAGS) $(INCPATH) $(LFLAGS) $(LIBS) -o ex_engine ex_engine.cpp
