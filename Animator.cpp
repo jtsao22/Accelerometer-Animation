@@ -28,7 +28,7 @@ Animator::Animator(QWidget * parent):QCoin(parent)
 	}
 	angle[0]->rotation.setValue(SbVec3f(-1,0,0),0);
 	angle[1]->rotation.setValue(SbVec3f(0,0,1),0);
-	angle[2]->rotation.setValue(SbVec3f(1,0,0),0);
+	angle[2]->rotation.setValue(SbVec3f(0,0,1),0);
 	angle[3]->rotation.setValue(SbVec3f(1,0,0),0);
 
 	//Define temp pointers
@@ -76,11 +76,29 @@ Animator::Animator(QWidget * parent):QCoin(parent)
 
 	//Create upper arm
 	arm->addChild(silver);
-//	arm->addChild(angle[1]);
 	tempCylinder = new SoCylinder;
 	tempCylinder->radius = UPPERARM_RADIUS;
 	tempCylinder->height = UPPERARM_LENGTH;
 	arm->addChild(tempCylinder);
+
+    // Create elbow
+    tempTranslation = new SoTranslation;
+    tempTranslation->translation.setValue(SbVec3f(0,-2*UPPERARM_LENGTH/3, 0));
+    arm->addChild(tempTranslation);
+    arm->addChild(gray);
+    arm->addChild(new SoSphere);
+    arm->addChild(angle[2]);
+    arm->addChild(angle[3]);
+    tempTranslation = new SoTranslation;
+    tempTranslation->translation.setValue(SbVec3f(0, -2*UPPERARM_LENGTH/3, 0));
+    arm->addChild(tempTranslation);
+
+    //Create forearm
+    arm->addChild(silver);
+    tempCylinder = new SoCylinder;
+    tempCylinder->radius = FOREARM_RADIUS;
+    tempCylinder->height = FOREARM_LENGTH;
+    arm->addChild(tempCylinder);
 
 	root->addChild(arm);
 
@@ -170,7 +188,7 @@ void Animator::setAngle2(int newAngle)
 
 void Animator::setAngle3(int newAngle)
 {
-   angle[2]->rotation.setValue(SbVec3f(0,0,1),newAngle*M_PI/180);
+   angle[2]->rotation.setValue(SbVec3f(-1,0,0),newAngle*M_PI/180);
 }
 
 void Animator::setAngle4(int newAngle)
