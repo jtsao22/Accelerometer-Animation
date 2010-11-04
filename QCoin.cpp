@@ -1,5 +1,4 @@
 #include<QCoin.h>
-
 	/* Private data:
 	 * 	SoSeparator* root;
 	 * 	SoQtExaminerViewer* eViewer;
@@ -40,7 +39,31 @@ QCoin::QCoin( const char* scene_graph ,QWidget* parent)
 }
 QCoin::~QCoin()
 {
-	root->unref();
-	delete eViewer;
+   if (root)
+		root->unref();
+	if (eViewer)
+		delete eViewer;
 }
-
+void QCoin::setRoot(SoSeparator* newRoot)
+{
+   if (root)
+		root->unref();
+	root = newRoot;
+	root->ref();
+   if (!eViewer)
+		eViewer = new SoQtExaminerViewer(this);
+	eViewer->setSceneGraph(root);
+	eViewer->viewAll();
+	QCoin::show();
+}
+void QCoin::show()
+{
+	if (eViewer)
+		eViewer->show();
+	QWidget::show();
+}
+void QCoin::viewAll()
+{
+	if (eViewer)
+		eViewer->viewAll();
+}

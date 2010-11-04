@@ -22,5 +22,8 @@ public:
 	QCoin( QWidget* parent = 0);
 	QCoin( const char* scene_graph ,QWidget* parent = 0);
    ~QCoin();
+   void setRoot(SoSeparator* newRoot);
+	void show();
+	void viewAll();
 };
 #endif //QCOIN_H
