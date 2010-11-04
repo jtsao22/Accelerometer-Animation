@@ -20,7 +20,7 @@ int main(int argc, char ** argv)
   QApplication app(argc,argv);
 
   QWidget*  mainWindow =  new QWidget;
-  mainWindow->resize(800,600);
+  mainWindow->resize(1024,768);
   SoQt::init(mainWindow);
 
 
@@ -31,15 +31,18 @@ int main(int argc, char ** argv)
 	for(int i = 0; i<4; i++)
 	{
  		sldAngle[i]= new QSlider(Qt::Horizontal,mainWindow);
-  		sldAngle[i]->setRange(0,360);
  		sldAngle[i]->setValue(0);
   		sldAngle[i]->setGeometry(10,100*i+60,180,40);
   		lcdAngle[i] = new QLCDNumber(3,mainWindow);
   		lcdAngle[i]->setGeometry(10,100*i+10,180,40);
 		QObject::connect(sldAngle[i],SIGNAL(valueChanged(int)),lcdAngle[i],SLOT(display(int)));
 	}
+  	sldAngle[0]->setRange(-45,180);
+  	sldAngle[1]->setRange(0,180);
+  	sldAngle[2]->setRange(0,145);
+  	sldAngle[3]->setRange(-40,90);
 	Animator* gfx = new Animator(mainWindow);
-  	gfx->setGeometry(200,10,540,380);
+  	gfx->setGeometry(200,10,800,600);
 	QObject::connect(sldAngle[0],SIGNAL(valueChanged(int)),gfx,SLOT(setAngle1(int)));
 	QObject::connect(sldAngle[1],SIGNAL(valueChanged(int)),gfx,SLOT(setAngle2(int)));
 	QObject::connect(sldAngle[2],SIGNAL(valueChanged(int)),gfx,SLOT(setAngle3(int)));

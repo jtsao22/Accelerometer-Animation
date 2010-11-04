@@ -71,7 +71,7 @@ Animator::Animator(QWidget * parent):QCoin(parent)
 	arm->addChild(angle[0]);
 	arm->addChild(angle[1]);
 	tempTranslation = new SoTranslation;
-	tempTranslation->translation.setValue(SbVec3f(0,-UPPERARM_LENGTH /2.0,0));
+	tempTranslation->translation.setValue(SbVec3f(0,-2*UPPERARM_LENGTH /3.0,0));
 	arm->addChild(tempTranslation);
 
 	//Create upper arm
@@ -83,14 +83,14 @@ Animator::Animator(QWidget * parent):QCoin(parent)
 
     // Create elbow
     tempTranslation = new SoTranslation;
-    tempTranslation->translation.setValue(SbVec3f(0,-2*UPPERARM_LENGTH/3, 0));
+    tempTranslation->translation.setValue(SbVec3f(0,-2*UPPERARM_LENGTH/3.0, 0));
     arm->addChild(tempTranslation);
     arm->addChild(gray);
     arm->addChild(new SoSphere);
     arm->addChild(angle[3]);
     arm->addChild(angle[2]);
     tempTranslation = new SoTranslation;
-    tempTranslation->translation.setValue(SbVec3f(0, -2*UPPERARM_LENGTH/3, 0));
+    tempTranslation->translation.setValue(SbVec3f(0, -2*UPPERARM_LENGTH/3.0, 0));
     arm->addChild(tempTranslation);
 
     //Create forearm

@@ -69,7 +69,6 @@ SoSeparator* createPlanet(float radius, float distance, float initialAngle, SbCo
 		//revolution around the Sun
 		SoRotationXYZ* rotY = new SoRotationXYZ;
 		rotY->axis = SoRotationXYZ::Y;
-		root->addChild(rotY);
 
 		// connect engine to rotation node
 		SoElapsedTime* counter = new SoElapsedTime;
@@ -82,6 +81,7 @@ SoSeparator* createPlanet(float radius, float distance, float initialAngle, SbCo
 											 distance*float(-sin(initialAngle)));
 
 		root->addChild(trans);
+		root->addChild(rotY);
 
 		//planet geometry
 		SoSphere *sphere = new SoSphere;

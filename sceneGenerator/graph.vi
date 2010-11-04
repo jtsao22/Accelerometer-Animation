@@ -17,6 +17,10 @@ Separator {
       diffuseColor 0.69999999 0.69999999 1
 
     }
+    Translation {
+      translation 45 0 -0
+
+    }
     RotationXYZ {
       angle 0 =
       ElapsedTime {
@@ -24,10 +28,6 @@ Separator {
 
       }      . timeOut
       axis Y
-
-    }
-    Translation {
-      translation 45 0 -0
 
     }
     Sphere {
@@ -41,6 +41,10 @@ Separator {
       diffuseColor 1 0.30000001 0
 
     }
+    Translation {
+      translation -9.9999981 0 17.320509
+
+    }
     RotationXYZ {
       angle 0 =
       ElapsedTime {
@@ -48,10 +52,6 @@ Separator {
 
       }      . timeOut
       axis Y
-
-    }
-    Translation {
-      translation -9.9999981 0 17.320509
 
     }
     Sphere {
@@ -65,6 +65,10 @@ Separator {
       diffuseColor 1 0.60000002 0
 
     }
+    Translation {
+      translation -30 0 2.6226833e-06
+
+    }
     RotationXYZ {
       angle 0 =
       ElapsedTime {
@@ -72,10 +76,6 @@ Separator {
 
       }      . timeOut
       axis Y
-
-    }
-    Translation {
-      translation -30 0 2.6226833e-06
 
     }
     Sphere {
