@@ -29,7 +29,7 @@ Animator::Animator(QWidget * parent):QCoin(parent)
 	angle[0]->rotation.setValue(SbVec3f(-1,0,0),0);
 	angle[1]->rotation.setValue(SbVec3f(0,0,1),0);
 	angle[2]->rotation.setValue(SbVec3f(0,0,1),0);
-	angle[3]->rotation.setValue(SbVec3f(1,0,0),0);
+	angle[3]->rotation.setValue(SbVec3f(0,1,0),0);
 
 	//Define temp pointers
 	SoRotation* tempRotation;
@@ -87,8 +87,8 @@ Animator::Animator(QWidget * parent):QCoin(parent)
     arm->addChild(tempTranslation);
     arm->addChild(gray);
     arm->addChild(new SoSphere);
-    arm->addChild(angle[2]);
     arm->addChild(angle[3]);
+    arm->addChild(angle[2]);
     tempTranslation = new SoTranslation;
     tempTranslation->translation.setValue(SbVec3f(0, -2*UPPERARM_LENGTH/3, 0));
     arm->addChild(tempTranslation);
@@ -193,6 +193,6 @@ void Animator::setAngle3(int newAngle)
 
 void Animator::setAngle4(int newAngle)
 {
-   angle[3]->rotation.setValue(SbVec3f(0,0,1),newAngle*M_PI/180);
+   angle[3]->rotation.setValue(SbVec3f(0,1,0),newAngle*M_PI/180);
 }
 
