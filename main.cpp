@@ -41,6 +41,9 @@ int main(int argc, char ** argv)
 	Animator* gfx = new Animator(mainWindow);
   	gfx->setGeometry(200,10,540,380);
 	QObject::connect(sldAngle[0],SIGNAL(valueChanged(int)),gfx,SLOT(setAngle1(int)));
+	QObject::connect(sldAngle[1],SIGNAL(valueChanged(int)),gfx,SLOT(setAngle2(int)));
+	QObject::connect(sldAngle[2],SIGNAL(valueChanged(int)),gfx,SLOT(setAngle3(int)));
+	QObject::connect(sldAngle[3],SIGNAL(valueChanged(int)),gfx,SLOT(setAngle4(int)));
 
   //QPushButton* quit = new QPushButton("Quit",mainWindow);
   //quit->setFont(QFont("Times",18,QFont::Bold));

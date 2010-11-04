@@ -26,10 +26,10 @@ Animator::Animator(QWidget * parent):QCoin(parent)
 	{
 		angle[i] = new SoRotation;	
 	}
-	angle[0]->rotation.setValue(1,0,0,0);
-	angle[1]->rotation.setValue(0,0,1,0);
-	angle[2]->rotation.setValue(1,0,0,0);
-	angle[3]->rotation.setValue(1,0,0,0);
+	angle[0]->rotation.setValue(SbVec3f(-1,0,0),0);
+	angle[1]->rotation.setValue(SbVec3f(0,0,1),0);
+	angle[2]->rotation.setValue(SbVec3f(1,0,0),0);
+	angle[3]->rotation.setValue(SbVec3f(1,0,0),0);
 
 	//Define temp pointers
 	SoRotation* tempRotation;
@@ -52,36 +52,35 @@ Animator::Animator(QWidget * parent):QCoin(parent)
 	//Create the body
 	body = new SoSeparator;
 	body->addChild(gray);
-	body->addChild(new SoRotation);
-   SoRotation* bodyRotation = (SoRotation*) body->getChild(0);
-	bodyRotation->rotation.setValue(SbVec3f(0,0,1),M_PI/2);
+	tempRotation = new SoRotation;
+	tempRotation->rotation.setValue(SbVec3f(0,0,1),M_PI/2);
+	body->addChild(tempRotation);
 	body->addChild(new SoCone);
 	root->addChild(body);
 
 
 	//Start the arm
 	arm = new SoSeparator;
+	tempTranslation = new SoTranslation;
+	tempTranslation->translation.setValue(SbVec3f(1+UPPERARM_RADIUS,0,0));
+	arm->addChild(tempTranslation);
 
 	//Create shoulder
 	arm->addChild(gray);
 	arm->addChild(new SoSphere);
-
-	//Create upper arm
-	arm->addChild(silver);
 	arm->addChild(angle[0]);
 	arm->addChild(angle[1]);
 	tempTranslation = new SoTranslation;
-	tempTranslation->translation.setValue(SbVec3f(1,-UPPERARM_LENGTH /2.0,0));
+	tempTranslation->translation.setValue(SbVec3f(0,-UPPERARM_LENGTH /2.0,0));
+	arm->addChild(tempTranslation);
+
+	//Create upper arm
+	arm->addChild(silver);
+//	arm->addChild(angle[1]);
 	tempCylinder = new SoCylinder;
 	tempCylinder->radius = UPPERARM_RADIUS;
 	tempCylinder->height = UPPERARM_LENGTH;
 	arm->addChild(tempCylinder);
-
-	//Elbow
-	tempTranslation = new SoTranslation;
-	tempTranslation->translation.setValue(SbVec3f(0,-UPPERARM_LENGTH /4.0,0));
-	arm->addChild(tempTranslation);
-	arm->addChild(new SoSphere);
 
 	root->addChild(arm);
 
@@ -161,7 +160,7 @@ Animator::Animator(QWidget * parent):QCoin(parent)
 }
 void Animator::setAngle1(int newAngle)
 {
-   angle[0]->rotation.setValue(SbVec3f(1,0,0),newAngle*M_PI/180);
+   angle[0]->rotation.setValue(SbVec3f(-1,0,0),newAngle*M_PI/180);
 }
 
 void Animator::setAngle2(int newAngle)
