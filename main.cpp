@@ -9,6 +9,7 @@
 #include <Animator.h>
 //#include <QFileDialog>
 
+#define NUM_ANGLES 5
 
 
 
@@ -26,9 +27,9 @@ int main(int argc, char ** argv)
 
   
 	//Create sliders and LCD's
-	QSlider* sldAngle[4];
-	QLCDNumber* lcdAngle[4];
-	for(int i = 0; i<4; i++)
+	QSlider* sldAngle[NUM_ANGLES];
+	QLCDNumber* lcdAngle[NUM_ANGLES];
+	for(int i = 0; i< NUM_ANGLES; i++)
 	{
  		sldAngle[i]= new QSlider(Qt::Horizontal,mainWindow);
  		sldAngle[i]->setValue(0);
@@ -41,12 +42,14 @@ int main(int argc, char ** argv)
   	sldAngle[1]->setRange(0,180);
   	sldAngle[2]->setRange(0,145);
   	sldAngle[3]->setRange(-40,90);
+    sldAngle[4]->setRange(-80,180);
 	Animator* gfx = new Animator(mainWindow);
   	gfx->setGeometry(200,10,800,600);
 	QObject::connect(sldAngle[0],SIGNAL(valueChanged(int)),gfx,SLOT(setAngle1(int)));
 	QObject::connect(sldAngle[1],SIGNAL(valueChanged(int)),gfx,SLOT(setAngle2(int)));
 	QObject::connect(sldAngle[2],SIGNAL(valueChanged(int)),gfx,SLOT(setAngle3(int)));
 	QObject::connect(sldAngle[3],SIGNAL(valueChanged(int)),gfx,SLOT(setAngle4(int)));
+    QObject::connect(sldAngle[4],SIGNAL(valueChanged(int)),gfx,SLOT(setAngle5(int)));
 
   //QPushButton* quit = new QPushButton("Quit",mainWindow);
   //quit->setFont(QFont("Times",18,QFont::Bold));
@@ -58,7 +61,7 @@ int main(int argc, char ** argv)
   	SoQt::mainLoop();
 
   	delete gfx;
-	for(int i = 0; i < 4; i++)
+	for(int i = 0; i < NUM_ANGLES; i++)
 	{
 		delete sldAngle[i];
 		delete lcdAngle[i];

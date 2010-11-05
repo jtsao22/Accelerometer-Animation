@@ -13,8 +13,15 @@
 
 #define UPPERARM_RADIUS 1
 #define UPPERARM_LENGTH 3
+
 #define FOREARM_RADIUS 1
 #define FOREARM_LENGTH 3
+
+#define FINGER_RADIUS 0.2
+#define FINGER_LENGTH 1.5
+
+#define THUMB_RADIUS 0.23
+#define THUMB_LENGTH 1.0
 
 Animator::Animator(QWidget * parent):QCoin(parent)
 {
@@ -22,7 +29,7 @@ Animator::Animator(QWidget * parent):QCoin(parent)
   	setRoot(root);
 
 	//Create the angles
-	for(int i = 0; i < 4; i++)
+	for(int i = 0; i < 5; i++)
 	{
 		angle[i] = new SoRotation;	
 	}
@@ -30,6 +37,7 @@ Animator::Animator(QWidget * parent):QCoin(parent)
 	angle[1]->rotation.setValue(SbVec3f(0,0,1),0);
 	angle[2]->rotation.setValue(SbVec3f(0,0,1),0);
 	angle[3]->rotation.setValue(SbVec3f(0,1,0),0);
+    angle[4]->rotation.setValue(SbVec3f(0,1,0),0);
 
 	//Define temp pointers
 	SoRotation* tempRotation;
@@ -70,11 +78,11 @@ Animator::Animator(QWidget * parent):QCoin(parent)
 	arm->addChild(new SoSphere);
 	arm->addChild(angle[0]);
 	arm->addChild(angle[1]);
+
+	//Create upper arm
 	tempTranslation = new SoTranslation;
 	tempTranslation->translation.setValue(SbVec3f(0,-2*UPPERARM_LENGTH /3.0,0));
 	arm->addChild(tempTranslation);
-
-	//Create upper arm
 	arm->addChild(silver);
 	tempCylinder = new SoCylinder;
 	tempCylinder->radius = UPPERARM_RADIUS;
@@ -89,92 +97,59 @@ Animator::Animator(QWidget * parent):QCoin(parent)
     arm->addChild(new SoSphere);
     arm->addChild(angle[3]);
     arm->addChild(angle[2]);
+
+    //Create forearm
     tempTranslation = new SoTranslation;
     tempTranslation->translation.setValue(SbVec3f(0, -2*UPPERARM_LENGTH/3.0, 0));
     arm->addChild(tempTranslation);
-
-    //Create forearm
     arm->addChild(silver);
+    arm->addChild(angle[4]);
     tempCylinder = new SoCylinder;
     tempCylinder->radius = FOREARM_RADIUS;
     tempCylinder->height = FOREARM_LENGTH;
     arm->addChild(tempCylinder);
 
+    // Create wrist 
+    tempTranslation = new SoTranslation;
+    tempTranslation->translation.setValue(SbVec3f(0,-2*UPPERARM_LENGTH/3.0, 0));
+    arm->addChild(tempTranslation);
+    arm->addChild(gray);
+    arm->addChild(new SoSphere);
+
+    // Add four main fingers
+    tempTranslation = new SoTranslation;
+    tempTranslation->translation.setValue(SbVec3f(-1,-0.4*UPPERARM_LENGTH, 0));
+    arm->addChild(tempTranslation);
+    arm->addChild(silver);
+
+    for(int i = 0; i < 4; i++)
+    {
+        tempTranslation = new SoTranslation;
+        tempTranslation->translation.setValue(SbVec3f(0.4,0, 0));
+	    arm->addChild(tempTranslation);
+	    //arm->addChild(silver);
+	    tempCylinder = new SoCylinder;
+	    tempCylinder->radius = FINGER_RADIUS;
+	    tempCylinder->height = FINGER_LENGTH;
+	    arm->addChild(tempCylinder);
+    }
+    
+    //Add Thumb
+    tempTranslation = new SoTranslation;
+    tempTranslation->translation.setValue(SbVec3f(-4*0.4-0.2,0.5,0));
+    arm->addChild(tempTranslation);
+    tempRotation = new SoRotation;
+    tempRotation->rotation.setValue(SbVec3f(0,0,1),-M_PI/4);
+    arm->addChild(tempRotation);
+    tempCylinder = new SoCylinder;
+    tempCylinder->radius = THUMB_RADIUS;
+    tempCylinder->height = THUMB_LENGTH;
+    arm->addChild(tempCylinder);
+
+    // Add arm to root
 	root->addChild(arm);
 
-	/*//Create forearm
-	arm->addChild(angle[3]);
-	arm->addChild(tempTranslation);dd
-	SoSeparator* forearm = new SoSeparator;
-
-	forearm->addChild(silver);
-	tempCylinder = new SoCylinder;
-	tempCylinder->radius = UPPERARM_RADIUS;
-	tempCylinder->height = UPPERARM_LENGTH;
-	forearm->addChild(tempCylinder);
-
-	tempTranslation->translation.setValue(SbVec3f(0,-FOREARM_LENGTH /4.0,0));
-	forearm->addChild(tempTranslation);
-	
-	forearm->addChild(new SoSphere);	
-
-	tempTranslation->translation.setValue(SbVec3f(0,-FOREARM_LENGTH,0));
-*/
 	viewAll();
-/*
-  // Define Forearm 
-  SoTransform *forearm_transform = new SoTransform;
-  forearm_transform->translation.setValue(0, 0, 0.0);
-
-  SoCylinder *forearm_cylinder = new SoCylinder;
-  forearm_cylinder->radius = FOREARM_RADIUS;
-  forearm_cylinder->height = FOREARM_HEIGHT;
-
-  // Define Upper Arm
-  
-  SoTransform *upper_arm_transform = new SoTransform;
-  upper_arm_transform->translation.setValue(0,5, 0.0);
-  
-  SoCylinder *upper_arm_cylinder = new SoCylinder;
-  upper_arm_cylinder->radius = UPPER_ARM_RADIUS;
-  upper_arm_cylinder->height = UPPER_ARM_HEIGHT;
- 
-  // Define Elbow joint
-  
-  SoTransform *elbow_transform = new SoTransform;
-  elbow_transform->translation.setValue(0, -2.5, 0);
-  elbow_transform->scaleFactor.setValue(1.2, 1.2, 1.2);
-  //elbow_transform->rotation.setValue(k
-
-  SoMaterial *silver = new SoMaterial;
-  silver->ambientColor.setValue(.2, .2, .2);
-  silver->diffuseColor.setValue(.6, .6, .6);
-  silver->specularColor.setValue(.5, .5, .5);
-  silver->shininess = .5;
-
-  SoSphere *elbow_sphere = new SoSphere;
-
-  // Define Shoulder joint
-  
-  SoTransform *shoulder_transform = new SoTransform;
-  shoulder_transform->translation.setValue(0, 4.5, 0);
-  shoulder_transform->scaleFactor.setValue(1.2, 1.2, 1.2);
-
-  SoSphere *shoulder_sphere = new SoSphere;
-  
-  // Combine forearm and upper arm into arm
-  arm->addChild(forearm_transform);
-  arm->addChild(forearm_cylinder);
-  arm->addChild(upper_arm_transform);
-  arm->addChild(upper_arm_cylinder);
-
-  // Add joints
-  arm->addChild(elbow_transform);
-  arm->addChild(silver);
-  arm->addChild(elbow_sphere);
-  arm->addChild(shoulder_transform);
-  arm->addChild(shoulder_sphere);
-*/
 }
 void Animator::setAngle1(int newAngle)
 {
@@ -196,3 +171,7 @@ void Animator::setAngle4(int newAngle)
    angle[3]->rotation.setValue(SbVec3f(0,1,0),newAngle*M_PI/180);
 }
 
+void Animator::setAngle5(int newAngle)
+{
+   angle[4]->rotation.setValue(SbVec3f(0,1,0),newAngle*M_PI/180);
+}

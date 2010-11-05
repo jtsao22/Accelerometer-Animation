@@ -16,7 +16,7 @@ private:
 	SoSeparator* root;
 	SoSeparator* body;
 	SoSeparator* arm;
-	SoRotation* angle[4];
+	SoRotation* angle[5];
 
 public:
 	Animator(QWidget* parent = 0);
@@ -25,6 +25,7 @@ public slots:
 	void setAngle2(int);
 	void setAngle3(int);
 	void setAngle4(int);
+    void setAngle5(int);
 
 signals:
 
