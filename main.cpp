@@ -39,7 +39,7 @@ int main(int argc, char ** argv)
 		QObject::connect(sldAngle[i],SIGNAL(valueChanged(int)),lcdAngle[i],SLOT(display(int)));
 	}
   	sldAngle[0]->setRange(-45,180);
-  	sldAngle[1]->setRange(0,180);
+  	sldAngle[1]->setRange(0,120);
   	sldAngle[2]->setRange(0,145);
   	sldAngle[3]->setRange(-40,90);
    sldAngle[4]->setRange(0,180);
