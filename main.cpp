@@ -42,7 +42,7 @@ int main(int argc, char ** argv)
   	sldAngle[1]->setRange(0,180);
   	sldAngle[2]->setRange(0,145);
   	sldAngle[3]->setRange(-40,90);
-    sldAngle[4]->setRange(-80,180);
+   sldAngle[4]->setRange(0,180);
 	Animator* gfx = new Animator(mainWindow);
   	gfx->setGeometry(200,10,800,600);
 	QObject::connect(sldAngle[0],SIGNAL(valueChanged(int)),gfx,SLOT(setAngle1(int)));

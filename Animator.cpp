@@ -37,7 +37,7 @@ Animator::Animator(QWidget * parent):QCoin(parent)
 	angle[1]->rotation.setValue(SbVec3f(0,0,1),0);
 	angle[2]->rotation.setValue(SbVec3f(0,0,1),0);
 	angle[3]->rotation.setValue(SbVec3f(0,1,0),0);
-    angle[4]->rotation.setValue(SbVec3f(0,1,0),0);
+   angle[4]->rotation.setValue(SbVec3f(0,1,0),0);
 
 	//Define temp pointers
 	SoRotation* tempRotation;
@@ -76,8 +76,8 @@ Animator::Animator(QWidget * parent):QCoin(parent)
 	//Create shoulder
 	arm->addChild(gray);
 	arm->addChild(new SoSphere);
-	arm->addChild(angle[0]);
 	arm->addChild(angle[1]);
+	arm->addChild(angle[0]);
 
 	//Create upper arm
 	tempTranslation = new SoTranslation;
@@ -87,6 +87,7 @@ Animator::Animator(QWidget * parent):QCoin(parent)
 	tempCylinder = new SoCylinder;
 	tempCylinder->radius = UPPERARM_RADIUS;
 	tempCylinder->height = UPPERARM_LENGTH;
+   arm->addChild(angle[3]);
 	arm->addChild(tempCylinder);
 
     // Create elbow
@@ -95,7 +96,6 @@ Animator::Animator(QWidget * parent):QCoin(parent)
     arm->addChild(tempTranslation);
     arm->addChild(gray);
     arm->addChild(new SoSphere);
-    arm->addChild(angle[3]);
     arm->addChild(angle[2]);
 
     //Create forearm
