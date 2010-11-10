@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'QCoin.h'
 **
-** Created: Tue Nov 9 22:03:17 2010
+** Created: Tue Nov 9 23:11:52 2010
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.7.0)
 **
 ** WARNING! All changes made in this file will be lost!

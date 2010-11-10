@@ -1,4 +1,4 @@
-#include <MotionForm.h>
+#include <GeneralForm.h>
 #include <Inventor/nodes/SoBaseColor.h>
 #include <Inventor/nodes/SoCone.h>
 #include <Inventor/nodes/SoCube.h>
@@ -8,9 +8,7 @@
 #include <Inventor/nodes/SoTranslation.h>
 #include <Inventor/nodes/SoSeparator.h>
 #include <Inventor/nodes/SoRotation.h>
-#include <iostream>
-#include <sstream>
-//#include <stdio.h>
+#include <string>
 
 // DEFINES
 
@@ -27,7 +25,7 @@
 #define THUMB_LENGTH 1.0
 
 
-MotionForm::MotionForm(QTableWidget* newTbl, QWidget * parent):QCoin(parent)
+GeneralForm::GeneralForm(QTableWidget* newTbl, QWidget * parent):QCoin(parent)
 {
 	tbl = newTbl;
 	root = new SoSeparator;
@@ -170,26 +168,11 @@ MotionForm::MotionForm(QTableWidget* newTbl, QWidget * parent):QCoin(parent)
 	viewAll();
 }
 
-void MotionForm::updateMotion(void)
+void GeneralForm::updateMotion(void)
 {
 	int i;
-	double a,b, mean, amp, p, w;
-	std::stringstream expression;
 	for( i = 0; i < NUM_ANGLES; i++)
 	{
-		expression.str().clear();
-		a = tbl->item(i,0)->text().toDouble();
-		b = tbl->item(i,1)->text().toDouble();
-		p = tbl->item(i,2)->text().toDouble();
-		w = tbl->item(i,3)->text().toDouble();
-		mean = (a+b)/2;
-		amp = (b-a)/2;
-		mean *= M_PI/180;
-		amp *= M_PI/180;
-		p *= M_PI/180;
-		w *= M_PI/180;
-		expression << "oa=" << mean << "+" << amp << "*cos(" << p << "+" << w << "*a);";
-//		printf("%s\n",expression.str().c_str());
-		angleCalc[i]->expression = expression.str().c_str();		
+		angleCalc[i]->expression = tbl->item(i,0)->text().toStdString().c_str();	
 	}	
 }
