@@ -29,7 +29,7 @@ int main(int argc, char ** argv)
 	QTableWidgetItem* tempItem;
 	QTableWidget* tbl = new QTableWidget(NUM_ANGLES,NUM_PARAMS,mainWindow);
 	QStringList hLbls, vLbls;
-	hLbls << "a" << "b" << "f" << "w";
+	hLbls << "a" << "b" << "p" << "w";
 	vLbls << "0" << "1" << "2" << "3" << "4" << "5";
 	tbl->setHorizontalHeaderLabels(hLbls);
 	tbl->setVerticalHeaderLabels(vLbls);
