@@ -12,6 +12,7 @@
 #include <Inventor/engines/SoElapsedTime.h>
 #include <Inventor/engines/SoComposeRotation.h>
 #include <QTableWidget>
+#include <QLabel>
 
 
 /*
@@ -40,11 +41,14 @@ private:
 	SoComposeRotation* angleCompRot[NUM_ANGLES];
 	SoElapsedTime* time;
 	QTableWidget* tbl;
+    QWidget *mainWindow;
 
 public:
-	MotionForm(QTableWidget* newTbl, QWidget* parent = 0);
+	MotionForm(QWidget *main, QTableWidget* newTbl, QWidget* parent = 0);
 public slots:
 	void updateMotion(void);
+    void updateWithFile(void);
+    void resetParams(void);
 signals:
 
 };

@@ -10,6 +10,7 @@
 //#include <QFileDialog>
 #include <QTableWidget>
 #include <QStringList>
+#include <QTextEdit>
 
 
 #define COL_WIDTH 50
@@ -52,18 +53,34 @@ int main(int argc, char ** argv)
   	goButton->setFont(QFont("Times",18,QFont::Bold));
   	goButton->setGeometry(10,200,180,40);
 
+    // Button for loading to file
+    QPushButton *fileButton = new QPushButton("Use File Data", mainWindow);
+    fileButton->setFont(QFont("Times",18,QFont::Bold));
+    fileButton->setGeometry(10,250,180,40);
 
-	MotionForm* gfx = new MotionForm(tbl, mainWindow);
+    // Button for resetting
+    QPushButton *resetButton = new QPushButton("Reset", mainWindow);
+    resetButton->setFont(QFont("Times",18,QFont::Bold));
+    resetButton->setGeometry(10,300,180,40);
+	MotionForm* gfx = new MotionForm(mainWindow, tbl, mainWindow);
   	gfx->setGeometry(225,10,800,600);
 	
 	QObject::connect(goButton,SIGNAL(clicked()),gfx,SLOT(updateMotion()));
 
-  	mainWindow->show();
+    // Register fileButton click
+    QObject::connect(fileButton, SIGNAL(clicked()), gfx, SLOT(updateWithFile()));
 
+    // Register resetButton click
+    QObject::connect(resetButton, SIGNAL(clicked()), gfx, SLOT(resetParams()));
+
+//  	mainWindow->show();
+
+    SoQt::show(mainWindow);
   	SoQt::mainLoop();
 
 	delete goButton;
 	delete tbl;
+    delete fileButton;
 //  	delete gfx;
   	delete mainWindow;
   	SoQt::done();

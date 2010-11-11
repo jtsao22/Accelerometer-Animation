@@ -8,6 +8,10 @@
 #include <Inventor/nodes/SoTranslation.h>
 #include <Inventor/nodes/SoSeparator.h>
 #include <Inventor/nodes/SoRotation.h>
+#include <QTextStream>
+#include <QTableWidget>
+#include <QTextEdit>
+#include <qfile.h>
 #include <iostream>
 #include <sstream>
 //#include <stdio.h>
@@ -27,8 +31,9 @@
 #define THUMB_LENGTH 1.0
 
 
-MotionForm::MotionForm(QTableWidget* newTbl, QWidget * parent):QCoin(parent)
+MotionForm::MotionForm(QWidget *main,QTableWidget* newTbl, QWidget * parent):QCoin(parent)
 {
+    mainWindow = main;
 	tbl = newTbl;
 	root = new SoSeparator;
   	setRoot(root);
@@ -192,4 +197,73 @@ void MotionForm::updateMotion(void)
 //		printf("%s\n",expression.str().c_str());
 		angleCalc[i]->expression = expression.str().c_str();		
 	}	
+}
+
+void MotionForm::updateWithFile(void)
+{
+    int row = 0;
+    int col = 0;
+    QFile file("config.txt");
+    QString token;
+    
+    // Create Label for messages
+    QTextEdit *txtedit = new QTextEdit(mainWindow);
+    txtedit->setReadOnly(1);
+    txtedit->setGeometry(10,350,180,40);
+    txtedit->show();
+    
+    // Check if file exists
+    if(!file.exists())
+    {
+        txtedit->setText("File does not exists");
+        return;
+    }
+    
+    // Open file
+    if(!file.open( QIODevice::ReadOnly))
+    {
+        txtedit->setText("Error: Problem Opening file");
+        return;
+    }
+    else
+        txtedit->setText("File opened Successfully!");
+
+    QTextStream in(&file);
+
+    in >> token;
+    while(token != NULL)
+    {
+        tbl->item(row,col)->setText(token);
+        col++;
+        if(col == NUM_PARAMS)
+        {
+            col = 0;
+            row++;
+        }
+
+        if(row > NUM_ANGLES)
+        {
+            txtedit->setText("File is corrupt");
+            return;
+        }
+        in >> token;
+    }
+    file.close();
+
+    // Do you guys want this to animate right away?
+    // If so: uncomment next line:
+    // updateMotion();
+
+}
+
+void MotionForm::resetParams(void)
+{
+    for(int col = 0; col < NUM_PARAMS; col++)
+    {
+        for(int row = 0; row < NUM_ANGLES; row++)
+        {
+            tbl->item(row,col)->setText("0");
+        }
+    }
+    updateMotion();
 }
