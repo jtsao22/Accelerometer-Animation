@@ -210,7 +210,7 @@ void MotionForm::updateWithFile(void)
     QString token;
     
     // Create Label for messages
-    QTextEdit *txtedit = new QTextEdit(this);
+    QTextEdit *txtedit = new QTextEdit((QWidget*) parent());
     txtedit->setReadOnly(1);
     txtedit->setGeometry(10,350,180,40);
     txtedit->show();
