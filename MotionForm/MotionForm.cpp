@@ -14,6 +14,7 @@
 #include <qfile.h>
 #include <iostream>
 #include <sstream>
+#include <QFileDialog>
 //#include <stdio.h>
 
 // DEFINES
@@ -31,9 +32,10 @@
 #define THUMB_LENGTH 1.0
 
 
-MotionForm::MotionForm(QWidget *main,QTableWidget* newTbl, QWidget * parent):QCoin(parent)
+//MotionForm::MotionForm(QWidget *main,QTableWidget* newTbl, QWidget * parent):QCoin(parent)
+MotionForm::MotionForm(QTableWidget* newTbl, QWidget * parent):QCoin(parent)
 {
-    mainWindow = main;
+   //mainWindow = main;
 	tbl = newTbl;
 	root = new SoSeparator;
   	setRoot(root);
@@ -203,11 +205,12 @@ void MotionForm::updateWithFile(void)
 {
     int row = 0;
     int col = 0;
-    QFile file("config.txt");
+	 QString filename = QFileDialog::getOpenFileName(this,"Select Parameter File",".","Text Files (*.txt)");
+    QFile file(filename.toAscii().data());
     QString token;
     
     // Create Label for messages
-    QTextEdit *txtedit = new QTextEdit(mainWindow);
+    QTextEdit *txtedit = new QTextEdit(this);
     txtedit->setReadOnly(1);
     txtedit->setGeometry(10,350,180,40);
     txtedit->show();

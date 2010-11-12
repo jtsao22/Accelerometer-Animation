@@ -41,10 +41,11 @@ private:
 	SoComposeRotation* angleCompRot[NUM_ANGLES];
 	SoElapsedTime* time;
 	QTableWidget* tbl;
-    QWidget *mainWindow;
+//    QWidget *mainWindow; //Can just use QObject::parent()
 
 public:
-	MotionForm(QWidget *main, QTableWidget* newTbl, QWidget* parent = 0);
+	//MotionForm(QWidget *main, QTableWidget* newTbl, QWidget* parent = 0);
+	MotionForm(QTableWidget* newTbl, QWidget* parent = 0);
 public slots:
 	void updateMotion(void);
     void updateWithFile(void);

@@ -62,7 +62,8 @@ int main(int argc, char ** argv)
     QPushButton *resetButton = new QPushButton("Reset", mainWindow);
     resetButton->setFont(QFont("Times",18,QFont::Bold));
     resetButton->setGeometry(10,300,180,40);
-	MotionForm* gfx = new MotionForm(mainWindow, tbl, mainWindow);
+	MotionForm* gfx = new MotionForm(tbl, mainWindow);
+	//MotionForm* gfx = new MotionForm(mainWindow, tbl, mainWindow);
   	gfx->setGeometry(225,10,800,600);
 	
 	QObject::connect(goButton,SIGNAL(clicked()),gfx,SLOT(updateMotion()));
