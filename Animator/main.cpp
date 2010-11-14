@@ -18,7 +18,7 @@ int main(int argc, char ** argv)
 	SoQt::init(mainWindow);
 	
 	Animator* gfx = new Animator(mainWindow);
-	gfx->show();
+//	gfx->show();
 
    SoQt::show(mainWindow);
   	SoQt::mainLoop();

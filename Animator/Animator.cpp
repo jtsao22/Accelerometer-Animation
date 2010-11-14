@@ -42,6 +42,12 @@
 #define COL_WIDTH 50
 #define ROW_HEIGHT 20
 
+#define TAB_WIDTH 290
+#define TAB_HEIGHT 748
+
+#define VIEWER_WIDTH 720
+#define VIEWER_HEIGHT 540
+
 
 Animator::Animator(QWidget * parent):QCoin(parent)
 {
@@ -188,14 +194,14 @@ Animator::Animator(QWidget * parent):QCoin(parent)
 	viewAll();
 
 	//Create GUI elements
-  	setGeometry(225,10,800,600);
+  	setGeometry(300,10,VIEWER_WIDTH,VIEWER_HEIGHT);
 	tabs = new QTabWidget(parent);
-	tabs->setGeometry(10,10,200,700);
+	tabs->setGeometry(10,10,TAB_WIDTH,TAB_HEIGHT);
 
 	//Create FreeForm Tab
    //Create sliders and LCD's
 	windows[0] = new QWidget;
-	windows[0]->setGeometry(10,10,200,600);
+	windows[0]->setGeometry(10,10,TAB_WIDTH,TAB_HEIGHT);
    for(int i = 0; i< NUM_ANGLES; i++)
    {
       sldAngle[i]= new QSlider(Qt::Horizontal,windows[0]);
@@ -204,20 +210,22 @@ Animator::Animator(QWidget * parent):QCoin(parent)
       lcdAngle[i] = new QLCDNumber(3,windows[0]);
       lcdAngle[i]->setGeometry(10,100*i+10,180,40);
       //QObject::connect(sldAngle[i],SIGNAL(valueChanged(int)),lcdAngle[i],SLOT(display(int)));
+   	sldAngle[i]->setRange(0,360);
    }
+/*
    sldAngle[0]->setRange(0,120);
    sldAngle[1]->setRange(-45,180);
    sldAngle[2]->setRange(-40,90);
    sldAngle[3]->setRange(0,145);
    sldAngle[4]->setRange(0,160);
    sldAngle[5]->setRange(-90,60);
-
+*/
 
 
 
 	//Create MotionForm tab
 	windows[1] =  new QWidget;
-	windows[1]->setGeometry(10,10,200,600);
+	windows[1]->setGeometry(10,10,TAB_WIDTH,TAB_HEIGHT);
 
 	//Create table
 	int i,j;
@@ -279,7 +287,7 @@ Animator::Animator(QWidget * parent):QCoin(parent)
 	currentTab = -1;
 	tabSwitch(0);
 	connect(tabs,SIGNAL(currentChanged(int)),this,SLOT(tabSwitch(int)));
-	tabs->show();
+	show();
 }
 
 Animator::~Animator()
@@ -486,5 +494,10 @@ void Animator::setAngle5(int newAngle)
 void Animator::show()
 {
 	QCoin::show();
+/*	for(int i = 0; i < NUM_TABS; i++)
+	{
+		windows[i]->show();
+	}
+*/
 	tabs->show();
 }
