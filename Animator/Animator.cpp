@@ -25,29 +25,6 @@
 #include <QTextEdit>
 
 
-// DEFINES
-
-#define UPPERARM_RADIUS 1
-#define UPPERARM_LENGTH 3
-
-#define FOREARM_RADIUS 1
-#define FOREARM_LENGTH 3
-
-#define FINGER_RADIUS 0.2
-#define FINGER_LENGTH 1.5
-
-#define THUMB_RADIUS 0.23
-#define THUMB_LENGTH 1.0
-
-#define COL_WIDTH 50
-#define ROW_HEIGHT 20
-
-#define TAB_WIDTH 290
-#define TAB_HEIGHT 748
-
-#define VIEWER_WIDTH 720
-#define VIEWER_HEIGHT 540
-
 
 Animator::Animator(QWidget * parent):QCoin(parent)
 {
@@ -427,41 +404,42 @@ void Animator::tabSwitch(int newTab)
 
 				break;
 		}
-	}
-	switch(newTab)
-	{
-		case 0:
-   		QObject::connect(sldAngle[0],SIGNAL(valueChanged(int)),this,SLOT(setAngle0(int)));
-   		QObject::connect(sldAngle[1],SIGNAL(valueChanged(int)),this,SLOT(setAngle1(int)));
-   		QObject::connect(sldAngle[2],SIGNAL(valueChanged(int)),this,SLOT(setAngle2(int)));
-   		QObject::connect(sldAngle[3],SIGNAL(valueChanged(int)),this,SLOT(setAngle3(int)));
-   		QObject::connect(sldAngle[4],SIGNAL(valueChanged(int)),this,SLOT(setAngle4(int)));
-   		QObject::connect(sldAngle[5],SIGNAL(valueChanged(int)),this,SLOT(setAngle5(int)));
-			for(i = 0; i < NUM_ANGLES; i++)
-			{
-      		QObject::connect(sldAngle[i],SIGNAL(valueChanged(int)),lcdAngle[i],SLOT(display(int)));
-				angle[i]->rotation.getValue(axisRead,angleRead);//can someone find a way of doing this without reading the axis?
-				sldAngle[i]->setValue(180*angleRead/M_PI);
-			}			
-			break;
+	
+		switch(newTab)
+		{
+			case 0:
+   			QObject::connect(sldAngle[0],SIGNAL(valueChanged(int)),this,SLOT(setAngle0(int)));
+   			QObject::connect(sldAngle[1],SIGNAL(valueChanged(int)),this,SLOT(setAngle1(int)));
+   			QObject::connect(sldAngle[2],SIGNAL(valueChanged(int)),this,SLOT(setAngle2(int)));
+   			QObject::connect(sldAngle[3],SIGNAL(valueChanged(int)),this,SLOT(setAngle3(int)));
+   			QObject::connect(sldAngle[4],SIGNAL(valueChanged(int)),this,SLOT(setAngle4(int)));
+   			QObject::connect(sldAngle[5],SIGNAL(valueChanged(int)),this,SLOT(setAngle5(int)));
+				for(i = 0; i < NUM_ANGLES; i++)
+				{
+      			QObject::connect(sldAngle[i],SIGNAL(valueChanged(int)),lcdAngle[i],SLOT(display(int)));
+					angle[i]->rotation.getValue(axisRead,angleRead);//can someone find a way of doing this without reading the axis?
+					sldAngle[i]->setValue(0.5 + 180*angleRead/M_PI);
+				}			
+				break;
 
-		case 1:
-   		// Register goButton click
-		   QObject::connect(goButton,SIGNAL(clicked()),this,SLOT(updateMotion()));
-			// Register fileButton click
-   		QObject::connect(fileButton, SIGNAL(clicked()), this, SLOT(updateWithFile()));
-   		// Register resetButton click
-   		QObject::connect(resetButton, SIGNAL(clicked()), this, SLOT(resetParams()));
+			case 1:
+   			// Register goButton click
+		  	 QObject::connect(goButton,SIGNAL(clicked()),this,SLOT(updateMotion()));
+				// Register fileButton click
+   			QObject::connect(fileButton, SIGNAL(clicked()), this, SLOT(updateWithFile()));
+   			// Register resetButton click
+   			QObject::connect(resetButton, SIGNAL(clicked()), this, SLOT(resetParams()));
 				   
-			for(i = 0; i < NUM_ANGLES; i++)
-   		{
-      		angle[i]->rotation.enableConnection(1);
-   		}
+				for(i = 0; i < NUM_ANGLES; i++)
+   			{
+      			angle[i]->rotation.enableConnection(1);
+   			}
 
 
-			break;
+				break;
+		}
+		currentTab = newTab;
 	}
-	currentTab = newTab;
 }
 void Animator::setAngle0(int newAngle)
 {

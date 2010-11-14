@@ -29,6 +29,30 @@
  * Angle 4 = Elbow Rotation Angle
  * Angle 5 = Wrist Bending Angle
  */
+
+// DEFINES
+
+#define UPPERARM_RADIUS 1
+#define UPPERARM_LENGTH 3
+
+#define FOREARM_RADIUS 1
+#define FOREARM_LENGTH 3
+
+#define FINGER_RADIUS 0.2
+#define FINGER_LENGTH 1.5
+
+#define THUMB_RADIUS 0.23
+#define THUMB_LENGTH 1.0
+
+#define COL_WIDTH 50
+#define ROW_HEIGHT 20
+
+#define TAB_WIDTH 290
+#define TAB_HEIGHT 748
+
+#define VIEWER_WIDTH 720
+#define VIEWER_HEIGHT 540
+
 #define NUM_ANGLES 6
 #define NUM_PARAMS 4
 #define SCREEN_WIDTH 1024
