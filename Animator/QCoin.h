@@ -5,7 +5,7 @@
  *
  */
 #ifndef QCOIN_H
-#define Q_COIN_H
+#define QCOIN_H
 #include <QWidget>
 #include <Inventor/nodes/SoSeparator.h>
 #include <Inventor/Qt/viewers/SoQtExaminerViewer.h>
