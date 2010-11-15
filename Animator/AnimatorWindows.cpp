@@ -7,13 +7,7 @@
 #include <sstream>
 #include <QFileDialog>
 #include <QPushButton>
-#include <QApplication>
 #include <QFont>
-#include <QWidget>
-#include <Animator.h>
-#include <QTableWidget>
-#include <QStringList>
-#include <QTextEdit>
 
 //AbstractWindow
 AbstractWindow::AbstractWindow(Animator* newGfx)
@@ -102,6 +96,8 @@ void MotionForm::transitionTo()
 	QObject::connect(goButton, SIGNAL(clicked()), this, SLOT(updateMotion()));
 	// Register fileButton click
   	QObject::connect(fileButton, SIGNAL(clicked()), this, SLOT(updateWithFile()));
+	// Register saveButton click
+  	QObject::connect(saveButton, SIGNAL(clicked()), this, SLOT(saveFile()));
   	// Register resetButton click
   	QObject::connect(resetButton, SIGNAL(clicked()), this, SLOT(resetParams()));
 		   
@@ -115,6 +111,7 @@ void MotionForm::transitionFrom()
 {        
 	goButton->disconnect();
 	fileButton->disconnect();
+	saveButton->disconnect();
 	resetButton->disconnect();
 	for(int i = 0; i < NUM_ANGLES; i++)
   	{
@@ -168,10 +165,15 @@ QWidget* MotionForm::createWindow()
    fileButton->setFont(QFont("Times",18,QFont::Bold));
    fileButton->setGeometry(10,300,180,40);
 
+   // Button for saving to file
+   saveButton = new QPushButton("Save to File", window);
+   saveButton->setFont(QFont("Times",18,QFont::Bold));
+   saveButton->setGeometry(10,350,180,40);
+
    // Button for resetting
    resetButton = new QPushButton("Reset", window);
    resetButton->setFont(QFont("Times",18,QFont::Bold));
-   resetButton->setGeometry(10,350,180,40);
+   resetButton->setGeometry(10,400,180,40);
 
 	return window;
 }
@@ -182,6 +184,7 @@ MotionForm::~MotionForm()
 	delete txtEdit;
 	delete goButton;
 	delete fileButton;
+	delete saveButton;
 	delete resetButton;
 }
 
@@ -267,4 +270,31 @@ void MotionForm::resetParams(void)
         }
     }
     updateMotion();
+}
+
+void MotionForm::saveFile(void)
+{
+	QString filename = QFileDialog::getSaveFileName(window,"Enter file name to save",".","Text Files (*.txt)");
+	if (!filename.endsWith(".txt"))
+		filename.append(".txt");
+   QFile file(filename.toAscii().data());
+ // Create file
+   if(!file.open( QIODevice::WriteOnly))
+   {
+       txtEdit->setText("Error: Problem Opening file");
+       return;
+   }
+   QTextStream out(&file);
+	int i, j;
+	for(i = 0; i < NUM_ANGLES; i++)
+	{
+		for(j = 0; j < NUM_PARAMS; j++)
+		{
+			out << tbl->item(i,j)->text() << " ";
+		}
+		out << "\n";
+	}
+		
+	file.close();
+	txtEdit->setText("File successfully written");	
 }

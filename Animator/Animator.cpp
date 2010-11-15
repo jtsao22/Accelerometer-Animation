@@ -10,8 +10,6 @@
 #include <Inventor/nodes/SoSeparator.h>
 #include <Inventor/nodes/SoRotation.h>
 
-
-
 Animator::Animator(QWidget * parent):QCoin(parent)
 {
 

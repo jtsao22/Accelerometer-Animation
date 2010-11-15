@@ -60,6 +60,7 @@ private:
 	QTableWidget* tbl;
 	QPushButton* goButton;
 	QPushButton* fileButton;
+	QPushButton* saveButton;
 	QPushButton* resetButton;
    QTextEdit* txtEdit;
 public:
@@ -71,6 +72,7 @@ public:
 public slots:
 	void updateMotion(void);
    void updateWithFile(void);
+   void saveFile(void);
    void resetParams(void);
 };
 #endif
