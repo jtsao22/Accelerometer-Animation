@@ -4,10 +4,6 @@
 #include <Animator.h>
 #include <QTabWidget>
 
-
-#define COL_WIDTH 50
-#define ROW_HEIGHT 20
-
 int main(int argc, char ** argv)
 {
 

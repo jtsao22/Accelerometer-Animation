@@ -12,11 +12,7 @@
 #include <Inventor/engines/SoElapsedTime.h>
 #include <Inventor/engines/SoComposeRotation.h>
 #include <QTableWidget>
-#include <QLabel>
-#include <QPushButton>
-#include <QTextEdit>
-#include <QSlider>
-#include <QLCDNumber>
+#include <string>
 
 
 /*
@@ -44,20 +40,29 @@
 #define THUMB_RADIUS 0.23
 #define THUMB_LENGTH 1.0
 
-#define COL_WIDTH 50
+#define COL_WIDTH 40
 #define ROW_HEIGHT 20
 
-#define TAB_WIDTH 290
+#define TAB_X 0
+#define TAB_Y 0
+#define TAB_WIDTH 200
 #define TAB_HEIGHT 748
 
-#define VIEWER_WIDTH 720
-#define VIEWER_HEIGHT 540
+#define VIEWER_X 210
+#define VIEWER_Y 0
+#define VIEWER_WIDTH 800
+#define VIEWER_HEIGHT 600
 
 #define NUM_ANGLES 6
 #define NUM_PARAMS 4
 #define SCREEN_WIDTH 1024
 #define SCREEN_HEIGHT 768
+
 #define NUM_TABS 2
+#define FREEFORM_INDEX 0
+#define MOTIONFORM_INDEX 1
+
+class AbstractWindow;
 
 class Animator: public QCoin
 {
@@ -74,30 +79,21 @@ private:
 
 	//GUI stuff
 	QTabWidget* tabs;
-	QWidget* windows[NUM_TABS];
-	QTableWidget* tbl;
-	QPushButton* goButton;
-	QPushButton* fileButton;
-	QPushButton* resetButton;
-   QTextEdit* txtEdit;
-	QSlider* sldAngle[NUM_ANGLES];
-	QLCDNumber* lcdAngle[NUM_ANGLES];
+	AbstractWindow* windows[NUM_TABS];
 	int currentTab;
+
+	//Helper functions for better organization
+	void createSceneGraph();
 
 public:
 	Animator(QWidget* parent = 0);
+	float getAngle(int);
+	void enableAngle(int, bool);
+	void setAngleExpr(int, std::string);
 	~Animator();
 	void show();
 public slots:
-	void updateMotion(void);
-   void updateWithFile(void);
-   void resetParams(void);
-   void setAngle0(int);
-   void setAngle1(int);
-   void setAngle2(int);
-   void setAngle3(int);
-   void setAngle4(int);
-   void setAngle5(int);
+   void setAngle(int,int);
 	void tabSwitch(int);
 
 signals:
