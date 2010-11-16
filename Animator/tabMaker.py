@@ -20,7 +20,7 @@ while 1:
  if qObj == 'y' or qObj == 'Y':
   qObj = 1;
   break;
- else:
+ elif qObj == 'n' or qObj == 'N':
   qObj = 0;
   break;
 
