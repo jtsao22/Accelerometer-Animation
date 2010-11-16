@@ -42,13 +42,13 @@
 #define COL_WIDTH 40
 #define ROW_HEIGHT 20
 
-#define TAB_X 0
-#define TAB_Y 0
+#define TAB_X 10
+#define TAB_Y 50
 #define TAB_WIDTH 200
-#define TAB_HEIGHT 748
+#define TAB_HEIGHT 708
 
 #define VIEWER_X 210
-#define VIEWER_Y 0
+#define VIEWER_Y 100
 #define VIEWER_WIDTH 800
 #define VIEWER_HEIGHT 600
 

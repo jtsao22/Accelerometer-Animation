@@ -122,15 +122,15 @@ void Animator::createSceneGraph()
 
 	//Make some colors
    SoMaterial *silver = new SoMaterial;
-   silver->ambientColor.setValue(.2, .2, .2);
-   silver->diffuseColor.setValue(.6, .6, .6);
-   silver->specularColor.setValue(.5, .5, .5);
-   silver->shininess = .5;
+   silver->ambientColor.setValue(.3, .3, .31);
+   silver->diffuseColor.setValue(.6, .6, .62);
+   silver->specularColor.setValue(.78, .8, .83);
+   silver->shininess = 1;
 
    SoMaterial *gray = new SoMaterial;
-   gray->ambientColor.setValue(.5, .5, .5);
-   gray->diffuseColor.setValue(.5, .5, .5);
-   gray->specularColor.setValue(.5, .5, .5);
+   gray->ambientColor.setValue(.51, .5, .5);
+   gray->diffuseColor.setValue(.6, .61, .6);
+   gray->specularColor.setValue(.4, .4, .42);
    gray->shininess = .5;
 
 
