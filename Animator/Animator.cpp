@@ -4,15 +4,15 @@
 #include <Inventor/nodes/SoCube.h>
 #include <Inventor/nodes/SoSphere.h>
 #include <Inventor/nodes/SoCylinder.h>
-#include <Inventor/nodes/SoMaterial.h>
 #include <Inventor/nodes/SoTranslation.h>
 #include <FreeForm.h>
 #include <MotionForm.h>
+#include <ColorForm.h>
 
 void Animator::defineWindows()
 {
 	//Total number of windows
-   num_windows = 2;
+   num_windows = 3;
    windows = new AbstractWindow*[num_windows];
 
    //Create FreeForm tab with index 0
@@ -20,6 +20,9 @@ void Animator::defineWindows()
 
    //Create MotionForm tab with index 1
    windows[1] = new MotionForm(this);
+
+   //Create MotionForm tab with index 1
+   windows[2] = new ColorForm(this);
 
 }
 
@@ -121,22 +124,22 @@ void Animator::createSceneGraph()
 	SoCylinder* tempCylinder;
 
 	//Make some colors
-   SoMaterial *silver = new SoMaterial;
-   silver->ambientColor.setValue(.3, .3, .31);
-   silver->diffuseColor.setValue(.6, .6, .62);
-   silver->specularColor.setValue(.78, .8, .83);
-   silver->shininess = 1;
+   limbMaterial = new SoMaterial;
+   limbMaterial->ambientColor.setValue(.3, .3, .31);
+   limbMaterial->diffuseColor.setValue(.6, .6, .62);
+   limbMaterial->specularColor.setValue(.78, .8, .83);
+   limbMaterial->shininess = 1;
 
-   SoMaterial *gray = new SoMaterial;
-   gray->ambientColor.setValue(.51, .5, .5);
-   gray->diffuseColor.setValue(.6, .61, .6);
-   gray->specularColor.setValue(.4, .4, .42);
-   gray->shininess = .5;
+   jointMaterial = new SoMaterial;
+   jointMaterial->ambientColor.setValue(.51, .5, .5);
+   jointMaterial->diffuseColor.setValue(.6, .61, .6);
+   jointMaterial->specularColor.setValue(.4, .4, .42);
+   jointMaterial->shininess = .5;
 
 
 	//Create the body
 	body = new SoSeparator;
-	body->addChild(gray);
+	body->addChild(jointMaterial);
 	tempRotation = new SoRotation;
 	tempRotation->rotation.setValue(SbVec3f(0,0,1),M_PI/2);
 	body->addChild(tempRotation);
@@ -151,7 +154,7 @@ void Animator::createSceneGraph()
 	arm->addChild(tempTranslation);
 
 	//Create shoulder
-	arm->addChild(gray);
+	arm->addChild(jointMaterial);
 	arm->addChild(new SoSphere);
 	arm->addChild(angle[0]);
 	arm->addChild(angle[1]);
@@ -160,7 +163,7 @@ void Animator::createSceneGraph()
 	tempTranslation = new SoTranslation;
 	tempTranslation->translation.setValue(SbVec3f(0,-2*UPPERARM_LENGTH /3.0,0));
 	arm->addChild(tempTranslation);
-	arm->addChild(silver);
+	arm->addChild(limbMaterial);
 	tempCylinder = new SoCylinder;
 	tempCylinder->radius = UPPERARM_RADIUS;
 	tempCylinder->height = UPPERARM_LENGTH;
@@ -171,7 +174,7 @@ void Animator::createSceneGraph()
    tempTranslation = new SoTranslation;
    tempTranslation->translation.setValue(SbVec3f(0,-2*UPPERARM_LENGTH/3.0, 0));
    arm->addChild(tempTranslation);
-   arm->addChild(gray);
+   arm->addChild(jointMaterial);
    arm->addChild(new SoSphere);
    arm->addChild(angle[3]);
 
@@ -179,7 +182,7 @@ void Animator::createSceneGraph()
    tempTranslation = new SoTranslation;
    tempTranslation->translation.setValue(SbVec3f(0, -2*UPPERARM_LENGTH/3.0, 0));
    arm->addChild(tempTranslation);
-   arm->addChild(silver);
+   arm->addChild(limbMaterial);
    arm->addChild(angle[4]);
    tempCylinder = new SoCylinder;
    tempCylinder->radius = FOREARM_RADIUS;
@@ -191,21 +194,21 @@ void Animator::createSceneGraph()
    tempTranslation->translation.setValue(SbVec3f(0,-2*UPPERARM_LENGTH/3.0, 0));
    arm->addChild(tempTranslation);
    arm->addChild(angle[5]);
-   arm->addChild(gray);
+   arm->addChild(jointMaterial);
    arm->addChild(new SoSphere);
 
    // Add four main fingers
    tempTranslation = new SoTranslation;
    tempTranslation->translation.setValue(SbVec3f(-1,-0.4*UPPERARM_LENGTH, 0));
    arm->addChild(tempTranslation);
-   arm->addChild(silver);
+   arm->addChild(limbMaterial);
 
    for(int i = 0; i < 4; i++)
    {
       tempTranslation = new SoTranslation;
       tempTranslation->translation.setValue(SbVec3f(0.4,0, 0));
 		arm->addChild(tempTranslation);
-	   //arm->addChild(silver);
+	   //arm->addChild(limbMaterial);
 	   tempCylinder = new SoCylinder;
 	   tempCylinder->radius = FINGER_RADIUS;
 	   tempCylinder->height = FINGER_LENGTH;
@@ -246,4 +249,18 @@ void Animator::enableAngle(int angleIndex, bool enable)
 void Animator::setAngleExpr(int angleIndex, std::string expr)
 {
 	angleCalc[angleIndex]->expression = expr.c_str();
+}
+void Animator::setMaterial(int area, double* a, double* d, double* s)
+{
+	switch(area)
+	{
+		case 0:
+			limbMaterial->ambientColor.setValue(a[0],a[1],a[2]);
+			limbMaterial->diffuseColor.setValue(d[0],d[1],d[2]);
+			limbMaterial->specularColor.setValue(s[0],s[1],s[2]);
+		case 1:
+			jointMaterial->ambientColor.setValue(a[0],a[1],a[2]);
+			jointMaterial->diffuseColor.setValue(d[0],d[1],d[2]);
+			jointMaterial->specularColor.setValue(s[0],s[1],s[2]);
+	}
 }

@@ -9,6 +9,7 @@
 #include <QCoin.h>
 #include <AbstractWindow.h>
 #include <Inventor/nodes/SoRotation.h>
+#include <Inventor/nodes/SoMaterial.h>
 #include <Inventor/engines/SoCalculator.h>
 #include <Inventor/engines/SoElapsedTime.h>
 #include <Inventor/engines/SoComposeRotation.h>
@@ -71,6 +72,8 @@ private:
 	SoCalculator* angleCalc[NUM_ANGLES];
 	SoComposeRotation* angleCompRot[NUM_ANGLES];
 	SoElapsedTime* time;
+	SoMaterial* limbMaterial;
+	SoMaterial* jointMaterial;
 	void createSceneGraph();
 
 	//GUI stuff
@@ -88,6 +91,7 @@ public:
 	void setAngleExpr(int, std::string);
 	~Animator();
 	void show();
+	void setMaterial(int, double*, double*, double*);
 public slots:
    void setAngle(int,int);
 	void tabSwitch(int);
