@@ -30,7 +30,7 @@ QWidget* MotionForm::createWindow()
 	QTableWidgetItem* tempItem;
 	tbl = new QTableWidget(NUM_ANGLES,NUM_PARAMS,window);
 	QStringList hLbls, vLbls;
-	hLbls << "a" << "b" << "p" << "w";
+	hLbls << "a" << "b" << "p" << "f";
 	vLbls << "0" << "1" << "2" << "3" << "4" << "5";
 	tbl->setHorizontalHeaderLabels(hLbls);
 	tbl->setVerticalHeaderLabels(vLbls);
@@ -109,21 +109,21 @@ void MotionForm::transitionFrom()
 
 void MotionForm::updateMotion(void)
 {
-  	double a,b, mean, amp, p, w;
+  	double a,b, mean, amp, p, f;
   	std::stringstream expression;
 	for(int i = 0; i < NUM_ANGLES; i++)
 	{
    	a = tbl->item(i,0)->text().toDouble();
    	b = tbl->item(i,1)->text().toDouble();
    	p = tbl->item(i,2)->text().toDouble();
-   	w = tbl->item(i,3)->text().toDouble();
+   	f = tbl->item(i,3)->text().toDouble();
    	mean = (a+b)/2;
    	amp = (b-a)/2;
    	mean *= M_PI/180;
    	amp *= M_PI/180;
    	p *= M_PI/180;
-   	w *= M_PI/180;
-   	expression << "oa=" << mean << "+" << amp << "*cos(" << p << "+" << w << "*a);";
+   	f *= 2*M_PI;
+   	expression << "oa=" << mean << "+" << amp << "*cos(" << p << "+" << f << "*a);";
 		gfx->setAngleExpr(i,expression.str());
 	}	
 }

@@ -34,9 +34,9 @@ QWidget* FreeForm::createWindow()
       sldAngle[i]= new FreeFormSlider(i,Qt::Horizontal,window);
       sldAngle[i]->setValue(0);
       sldAngle[i]->setGeometry(10,100*i+60,180,40);
-      lcdAngle[i] = new QLCDNumber(3,window);
+      lcdAngle[i] = new QLCDNumber(4,window);
       lcdAngle[i]->setGeometry(10,100*i+10,180,40);
-   	sldAngle[i]->setRange(0,360);
+   	sldAngle[i]->setRange(-360,720); //Ensures at least 360 degrees up or down to play with when switching from MotionForm
    }
 /*
    sldAngle[0]->setRange(0,120);
@@ -56,7 +56,7 @@ void FreeForm::transitionTo()
 		QObject::connect(sldAngle[i],SIGNAL(valueChanged(int)),sldAngle[i],SLOT(detectUpdate(int)));
   		QObject::connect(sldAngle[i],SIGNAL(sendUpdate(int,int)),gfx,SLOT(setAngle(int,int)));
   		QObject::connect(sldAngle[i],SIGNAL(valueChanged(int)),lcdAngle[i],SLOT(display(int)));
-		sldAngle[i]->setValue(0.5 + 180*gfx->getAngle(i)/M_PI);
+		sldAngle[i]->setValue(((int)(0.5 + 180*gfx->getAngle(i)/M_PI)) % 360);
 	}			
 }
 
