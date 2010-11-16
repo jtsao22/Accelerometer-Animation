@@ -1,0 +1,2 @@
+#!/bin/bash
+sudo apt-get install libqt4-core libqt4-dev libcoin60 libcoin60-dev libsoqt4-20 libsoqt4-dev build-essential python

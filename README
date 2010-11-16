@@ -1,4 +1,4 @@
-Author:
+Authors:
 Matt Miguel
 Jason Tsao
 Vikram Balakrishnan
@@ -6,4 +6,24 @@ Vikram Balakrishnan
 Using the Qt Framework, Coin3d, and accelerometer data to animate a human
 body
 
-Modified by Matt: Set up test
+To compile the Animator, you will need to install Coin3d and Qt.
+
+For convenience, we recommend working in a Linux environment such as Ubuntu.
+The following links lead to websites where you can install or emulate an Ubuntu OS.
+http://www.ubuntu.com/ 
+http://www.vmware.com/products/player/
+
+To get started with Ubuntu, simply run the linux_setup script in the top level directory to install the necessary libraries.
+This requires an internet connection.
+
+For Windows or Mac, see the respective sites for each library to get installation files:
+http://www.coin3d.org/
+http://qt.nokia.com/products/
+
+These sites also provide excellent documentation for Coin and Qt.
+
+Also recommended for learning Coin web books on Open Inventor (Coin uses the Open Inventor API):
+The Inventor Mentor:
+http://www-evasion.imag.fr/Membres/Francois.Faure/doc/inventorMentor/sgi_html/
+The Inventor Toolmaker:
+http://www-evasion.imag.fr/~Francois.Faure/doc/inventorToolmaker/sgi_html/
