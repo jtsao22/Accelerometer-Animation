@@ -1,5 +1,4 @@
 #include <Animator.h>
-#include <AnimatorWindows.h>
 #include <Inventor/nodes/SoBaseColor.h>
 #include <Inventor/nodes/SoCone.h>
 #include <Inventor/nodes/SoCube.h>
@@ -7,8 +6,22 @@
 #include <Inventor/nodes/SoCylinder.h>
 #include <Inventor/nodes/SoMaterial.h>
 #include <Inventor/nodes/SoTranslation.h>
-#include <Inventor/nodes/SoSeparator.h>
-#include <Inventor/nodes/SoRotation.h>
+#include <FreeForm.h>
+#include <MotionForm.h>
+
+void Animator::defineWindows()
+{
+	//Total number of windows
+   num_windows = 2;
+   windows = new AbstractWindow*[num_windows];
+
+   //Create FreeForm tab with index 0
+   windows[0] = new FreeForm(this);
+
+   //Create MotionForm tab with index 1
+   windows[1] = new MotionForm(this);
+
+}
 
 Animator::Animator(QWidget * parent):QCoin(parent)
 {
@@ -20,19 +33,18 @@ Animator::Animator(QWidget * parent):QCoin(parent)
 	tabs = new QTabWidget(parent);
 	tabs->setGeometry(TAB_X,TAB_Y,TAB_WIDTH,TAB_HEIGHT);
 
-	//Create FreeForm tab
-	windows[FREEFORM_INDEX] = new FreeForm(this);
-
-	//Create MotionForm tab
-	windows[MOTIONFORM_INDEX] = new MotionForm(this);
+	//Define the windows
+	defineWindows();	
 
 	//Insert windows into tab
-	tabs->addTab(windows[FREEFORM_INDEX]->createWindow(),"Free Form");
-	tabs->addTab(windows[MOTIONFORM_INDEX]->createWindow(),"Motion Form");
+	for(int i = 0; i < num_windows; i++)
+	{
+		tabs->addTab(windows[i]->createWindow(),windows[i]->getLabel());
+	}
 
 	//Call transition function to start at the tab first inserted into tabs
 	currentTab = -1;
-	tabSwitch(FREEFORM_INDEX);
+	tabSwitch(0);
 	connect(tabs,SIGNAL(currentChanged(int)),this,SLOT(tabSwitch(int)));
 	show();
 }
@@ -43,19 +55,20 @@ Animator::~Animator()
 	//Doing the following causes a segmentation fault on close for some reason
 	delete tabs;
 	*/
-	for(int i = 0; i < NUM_TABS; i++)
+	for(int i = 0; i < num_windows; i++)
 	{
 		delete windows[i];
 	}
+	delete [] windows;
 }
 
 
 void Animator::tabSwitch(int newTab)
 {
-	if (currentTab != newTab && newTab >= 0 && newTab < NUM_TABS)
+	if (currentTab != newTab && newTab >= 0 && newTab < num_windows)
 	{
 		//Transition from
-		if (currentTab >= 0 && currentTab < NUM_TABS)
+		if (currentTab >= 0 && currentTab < num_windows)
 			windows[currentTab]->transitionFrom();
 		//Transition to
 		windows[newTab]->transitionTo();

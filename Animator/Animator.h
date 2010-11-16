@@ -7,13 +7,12 @@
 #ifndef ANIMATOR_H
 #define ANIMATOR_H
 #include <QCoin.h>
+#include <AbstractWindow.h>
 #include <Inventor/nodes/SoRotation.h>
 #include <Inventor/engines/SoCalculator.h>
 #include <Inventor/engines/SoElapsedTime.h>
 #include <Inventor/engines/SoComposeRotation.h>
-#include <QTableWidget>
-#include <string>
-
+#include <QTabWidget>
 
 /*
  * Angles
@@ -58,10 +57,6 @@
 #define SCREEN_WIDTH 1024
 #define SCREEN_HEIGHT 768
 
-#define NUM_TABS 2
-#define FREEFORM_INDEX 0
-#define MOTIONFORM_INDEX 1
-
 class AbstractWindow;
 
 class Animator: public QCoin
@@ -76,14 +71,15 @@ private:
 	SoCalculator* angleCalc[NUM_ANGLES];
 	SoComposeRotation* angleCompRot[NUM_ANGLES];
 	SoElapsedTime* time;
+	void createSceneGraph();
 
 	//GUI stuff
 	QTabWidget* tabs;
-	AbstractWindow* windows[NUM_TABS];
+	int num_windows;
+	AbstractWindow** windows;
 	int currentTab;
+	void defineWindows();
 
-	//Helper functions for better organization
-	void createSceneGraph();
 
 public:
 	Animator(QWidget* parent = 0);

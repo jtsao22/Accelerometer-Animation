@@ -1,123 +1,23 @@
-#include <AnimatorWindows.h>
-#include <QTextStream>
-#include <QTableWidget>
-#include <QTextEdit>
-#include <QFile>
-#include <iostream>
+#include <MotionForm.h>
+#include <QStringList>
 #include <sstream>
+#include <QFile>
+#include <QTextStream>
 #include <QFileDialog>
-#include <QPushButton>
-#include <QFont>
-
-//AbstractWindow
-AbstractWindow::AbstractWindow(Animator* newGfx)
-{
-	gfx = newGfx;
-}
-
-AbstractWindow::~AbstractWindow(){}
-
-//FreeFormSlider
-
-FreeFormSlider::FreeFormSlider(int newId, Qt::Orientation o, QWidget * parent): QSlider(o,parent)
-{
-	id = newId;
-	connect(this,SIGNAL(valueChanged(int)),this,SLOT(detectUpdate(int)));
-}
-
-void FreeFormSlider::detectUpdate(int newValue)
-{
-	emit sendUpdate(id,newValue);
-}
-
-//FreeForm
-FreeForm::FreeForm(Animator * newGfx):AbstractWindow(newGfx){}
-
-void FreeForm::transitionTo()
-{
-	for(int i = 0; i < NUM_ANGLES; i++)
-	{
-  		QObject::connect(sldAngle[i],SIGNAL(sendUpdate(int,int)),gfx,SLOT(setAngle(int,int)));
-  		QObject::connect(sldAngle[i],SIGNAL(valueChanged(int)),lcdAngle[i],SLOT(display(int)));
-		sldAngle[i]->setValue(0.5 + 180*gfx->getAngle(i)/M_PI);
-	}			
-}
-
-void FreeForm::transitionFrom()
-{
-	for(int i = 0; i<NUM_ANGLES; i++)
-	{
-		sldAngle[i]->disconnect();
-	}
-}
-
-
-QWidget* FreeForm::createWindow()
-{
-	//Create FreeForm Tab
-   //Create sliders and LCD's
-	window = new QWidget;
-	window->setGeometry(TAB_X,TAB_Y,TAB_WIDTH,TAB_HEIGHT);
-   for(int i = 0; i< NUM_ANGLES; i++)
-   {
-      sldAngle[i]= new FreeFormSlider(i,Qt::Horizontal,window);
-      sldAngle[i]->setValue(0);
-      sldAngle[i]->setGeometry(10,100*i+60,180,40);
-      lcdAngle[i] = new QLCDNumber(3,window);
-      lcdAngle[i]->setGeometry(10,100*i+10,180,40);
-   	sldAngle[i]->setRange(0,360);
-   }
-/*
-   sldAngle[0]->setRange(0,120);
-   sldAngle[1]->setRange(-45,180);
-   sldAngle[2]->setRange(-40,90);
-   sldAngle[3]->setRange(0,145);
-   sldAngle[4]->setRange(0,160);
-   sldAngle[5]->setRange(-90,60);
-*/
-return window;
-}
-
-FreeForm::~FreeForm()
-{
-	for(int i = 0; i < NUM_ANGLES; i++)
-	{
-		delete sldAngle[i];
-		delete lcdAngle[i];
-	}
-}
+#include <QString>
 
 //MotionForm
-MotionForm::MotionForm(Animator * newGfx):AbstractWindow(newGfx){}
+MotionForm::MotionForm(Animator * newGfx):AbstractWindow(newGfx,"Motion Form"){}
 
-void MotionForm::transitionTo()
-{  
-	// Register goButton click
-	QObject::connect(goButton, SIGNAL(clicked()), this, SLOT(updateMotion()));
-	// Register fileButton click
-  	QObject::connect(fileButton, SIGNAL(clicked()), this, SLOT(updateWithFile()));
-	// Register saveButton click
-  	QObject::connect(saveButton, SIGNAL(clicked()), this, SLOT(saveFile()));
-  	// Register resetButton click
-  	QObject::connect(resetButton, SIGNAL(clicked()), this, SLOT(resetParams()));
-		   
-	for(int i = 0; i < NUM_ANGLES; i++)
-  	{
-		gfx->enableAngle(i,1);
-  	}
-}  
-      
-void MotionForm::transitionFrom()
-{        
-	goButton->disconnect();
-	fileButton->disconnect();
-	saveButton->disconnect();
-	resetButton->disconnect();
-	for(int i = 0; i < NUM_ANGLES; i++)
-  	{
-		gfx->enableAngle(i,0);
-   }
-}    
+MotionForm::~MotionForm()
+{
+	delete tbl;
+	delete txtEdit;
+	delete goButton;
+	delete fileButton;
+	delete saveButton;
+	delete resetButton;
+}
 
 QWidget* MotionForm::createWindow()
 {
@@ -178,15 +78,34 @@ QWidget* MotionForm::createWindow()
 	return window;
 }
 
-MotionForm::~MotionForm()
-{
-	delete tbl;
-	delete txtEdit;
-	delete goButton;
-	delete fileButton;
-	delete saveButton;
-	delete resetButton;
-}
+void MotionForm::transitionTo()
+{  
+	// Register goButton click
+	QObject::connect(goButton, SIGNAL(clicked()), this, SLOT(updateMotion()));
+	// Register fileButton click
+  	QObject::connect(fileButton, SIGNAL(clicked()), this, SLOT(updateWithFile()));
+	// Register saveButton click
+  	QObject::connect(saveButton, SIGNAL(clicked()), this, SLOT(saveFile()));
+  	// Register resetButton click
+  	QObject::connect(resetButton, SIGNAL(clicked()), this, SLOT(resetParams()));
+		   
+	for(int i = 0; i < NUM_ANGLES; i++)
+  	{
+		gfx->enableAngle(i,1);
+  	}
+}  
+      
+void MotionForm::transitionFrom()
+{        
+	goButton->disconnect();
+	fileButton->disconnect();
+	saveButton->disconnect();
+	resetButton->disconnect();
+	for(int i = 0; i < NUM_ANGLES; i++)
+  	{
+		gfx->enableAngle(i,0);
+   }
+}    
 
 void MotionForm::updateMotion(void)
 {
