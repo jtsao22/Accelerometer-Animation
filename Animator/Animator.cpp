@@ -124,22 +124,22 @@ void Animator::createSceneGraph()
 	SoCylinder* tempCylinder;
 
 	//Make some colors
-   limbMaterial = new SoMaterial;
-   limbMaterial->ambientColor.setValue(.3, .3, .31);
-   limbMaterial->diffuseColor.setValue(.6, .6, .62);
-   limbMaterial->specularColor.setValue(.78, .8, .83);
-   limbMaterial->shininess = 1;
+   colors[0] = new SoMaterial;
+   colors[0]->ambientColor.setValue(.3, .3, .31);
+   colors[0]->diffuseColor.setValue(.6, .6, .62);
+   colors[0]->specularColor.setValue(.78, .8, .83);
+   colors[0]->shininess = 1;
 
-   jointMaterial = new SoMaterial;
-   jointMaterial->ambientColor.setValue(.51, .5, .5);
-   jointMaterial->diffuseColor.setValue(.6, .61, .6);
-   jointMaterial->specularColor.setValue(.4, .4, .42);
-   jointMaterial->shininess = .5;
+   colors[1] = new SoMaterial;
+   colors[1]->ambientColor.setValue(.51, .5, .5);
+   colors[1]->diffuseColor.setValue(.6, .61, .6);
+   colors[1]->specularColor.setValue(.4, .4, .42);
+   colors[1]->shininess = .5;
 
 
 	//Create the body
 	body = new SoSeparator;
-	body->addChild(jointMaterial);
+	body->addChild(colors[1]);
 	tempRotation = new SoRotation;
 	tempRotation->rotation.setValue(SbVec3f(0,0,1),M_PI/2);
 	body->addChild(tempRotation);
@@ -154,7 +154,7 @@ void Animator::createSceneGraph()
 	arm->addChild(tempTranslation);
 
 	//Create shoulder
-	arm->addChild(jointMaterial);
+	arm->addChild(colors[1]);
 	arm->addChild(new SoSphere);
 	arm->addChild(angle[0]);
 	arm->addChild(angle[1]);
@@ -163,7 +163,7 @@ void Animator::createSceneGraph()
 	tempTranslation = new SoTranslation;
 	tempTranslation->translation.setValue(SbVec3f(0,-2*UPPERARM_LENGTH /3.0,0));
 	arm->addChild(tempTranslation);
-	arm->addChild(limbMaterial);
+	arm->addChild(colors[0]);
 	tempCylinder = new SoCylinder;
 	tempCylinder->radius = UPPERARM_RADIUS;
 	tempCylinder->height = UPPERARM_LENGTH;
@@ -174,7 +174,7 @@ void Animator::createSceneGraph()
    tempTranslation = new SoTranslation;
    tempTranslation->translation.setValue(SbVec3f(0,-2*UPPERARM_LENGTH/3.0, 0));
    arm->addChild(tempTranslation);
-   arm->addChild(jointMaterial);
+   arm->addChild(colors[1]);
    arm->addChild(new SoSphere);
    arm->addChild(angle[3]);
 
@@ -182,7 +182,7 @@ void Animator::createSceneGraph()
    tempTranslation = new SoTranslation;
    tempTranslation->translation.setValue(SbVec3f(0, -2*UPPERARM_LENGTH/3.0, 0));
    arm->addChild(tempTranslation);
-   arm->addChild(limbMaterial);
+   arm->addChild(colors[0]);
    arm->addChild(angle[4]);
    tempCylinder = new SoCylinder;
    tempCylinder->radius = FOREARM_RADIUS;
@@ -194,21 +194,21 @@ void Animator::createSceneGraph()
    tempTranslation->translation.setValue(SbVec3f(0,-2*UPPERARM_LENGTH/3.0, 0));
    arm->addChild(tempTranslation);
    arm->addChild(angle[5]);
-   arm->addChild(jointMaterial);
+   arm->addChild(colors[1]);
    arm->addChild(new SoSphere);
 
    // Add four main fingers
    tempTranslation = new SoTranslation;
    tempTranslation->translation.setValue(SbVec3f(-1,-0.4*UPPERARM_LENGTH, 0));
    arm->addChild(tempTranslation);
-   arm->addChild(limbMaterial);
+   arm->addChild(colors[0]);
 
    for(int i = 0; i < 4; i++)
    {
       tempTranslation = new SoTranslation;
       tempTranslation->translation.setValue(SbVec3f(0.4,0, 0));
 		arm->addChild(tempTranslation);
-	   //arm->addChild(limbMaterial);
+	   //arm->addChild(colors[0]);
 	   tempCylinder = new SoCylinder;
 	   tempCylinder->radius = FINGER_RADIUS;
 	   tempCylinder->height = FINGER_LENGTH;
@@ -250,17 +250,9 @@ void Animator::setAngleExpr(int angleIndex, std::string expr)
 {
 	angleCalc[angleIndex]->expression = expr.c_str();
 }
-void Animator::setMaterial(int area, double* a, double* d, double* s)
+void Animator::setMaterial(int color, double* a, double* d, double* s)
 {
-	switch(area)
-	{
-		case 0:
-			limbMaterial->ambientColor.setValue(a[0],a[1],a[2]);
-			limbMaterial->diffuseColor.setValue(d[0],d[1],d[2]);
-			limbMaterial->specularColor.setValue(s[0],s[1],s[2]);
-		case 1:
-			jointMaterial->ambientColor.setValue(a[0],a[1],a[2]);
-			jointMaterial->diffuseColor.setValue(d[0],d[1],d[2]);
-			jointMaterial->specularColor.setValue(s[0],s[1],s[2]);
-	}
+	colors[color]->ambientColor.setValue(a[0],a[1],a[2]);
+	colors[color]->diffuseColor.setValue(d[0],d[1],d[2]);
+	colors[color]->specularColor.setValue(s[0],s[1],s[2]);
 }

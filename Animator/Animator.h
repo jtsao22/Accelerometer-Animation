@@ -58,6 +58,8 @@
 #define SCREEN_WIDTH 1024
 #define SCREEN_HEIGHT 768
 
+#define NUM_COLORS 2
+
 class AbstractWindow;
 
 class Animator: public QCoin
@@ -72,8 +74,7 @@ private:
 	SoCalculator* angleCalc[NUM_ANGLES];
 	SoComposeRotation* angleCompRot[NUM_ANGLES];
 	SoElapsedTime* time;
-	SoMaterial* limbMaterial;
-	SoMaterial* jointMaterial;
+	SoMaterial* colors[NUM_COLORS];
 	void createSceneGraph();
 
 	//GUI stuff
