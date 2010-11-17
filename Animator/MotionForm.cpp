@@ -132,7 +132,7 @@ void MotionForm::updateWithFile(void)
 {
    int row = 0;
    int col = 0;
-	QString filename = QFileDialog::getOpenFileName(window,"Select Parameter File",".","Text Files (*.txt)");
+	QString filename = QFileDialog::getOpenFileName(window,"Select Motion File",".","Motion Files (*.mot)");
    QFile file(filename.toAscii().data());
    QString token;
    
@@ -169,6 +169,7 @@ void MotionForm::updateWithFile(void)
        if(row > NUM_ANGLES)
        {
            txtEdit->setText("File is corrupt");
+			  file.close();
            return;
        }
        in >> token;
@@ -193,7 +194,7 @@ void MotionForm::resetParams(void)
 
 void MotionForm::saveFile(void)
 {
-	QString filename = QFileDialog::getSaveFileName(window,"Enter file name to save",".","Text Files (*.txt)");
+	QString filename = QFileDialog::getSaveFileName(window,"Enter file name to save",".","Motion Files (*.mot)");
 	if (!filename.endsWith(".txt"))
 		filename.append(".txt");
    QFile file(filename.toAscii().data());

@@ -25,6 +25,10 @@ private:
 //Add private data here
 	QTableWidget* tbl;
 	QPushButton* goButton;
+	QPushButton* loadButton;
+	QPushButton* saveButton;
+	QTextEdit* txtEdit;
+	int tblRows, tblCols;
 
 public:
 	ColorForm(Animator*);
@@ -34,6 +38,8 @@ public:
 	QWidget* createWindow();
 
 public slots:
-	void updateColors();
+	void updateColor();
+	void loadColor();
+	void saveColor();
 };
 #endif

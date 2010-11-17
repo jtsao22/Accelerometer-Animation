@@ -5,6 +5,7 @@
 #include <Inventor/nodes/SoSphere.h>
 #include <Inventor/nodes/SoCylinder.h>
 #include <Inventor/nodes/SoTranslation.h>
+#include <Inventor/nodes/SoCamera.h>
 #include <FreeForm.h>
 #include <MotionForm.h>
 #include <ColorForm.h>
@@ -49,6 +50,13 @@ Animator::Animator(QWidget * parent):QCoin(parent)
 	currentTab = -1;
 	tabSwitch(0);
 	connect(tabs,SIGNAL(currentChanged(int)),this,SLOT(tabSwitch(int)));
+
+
+	//Set initial camera position
+	SoCamera* cam = getViewer()->getCamera();
+	cam->position.setValue(1,-4,-20);
+	cam->orientation.setValue(SbVec3f(0,1,0),M_PI);
+	viewAll();
 	show();
 }
 
@@ -92,19 +100,19 @@ void Animator::show()
 void Animator::createSceneGraph()
 {
 	//Create scene graph
-	root = new SoSeparator;
-  	setRoot(root);
-
+	SoSeparator* root = new SoSeparator;
+	setRoot(root);
+	
 	//Set the time
 	time = new SoElapsedTime;
 
 	//Create the angles
    angleAxis[0].setValue(0,0,1);
-	angleAxis[1].setValue(-1,0,0);
-	angleAxis[2].setValue(0,1,0);
-	angleAxis[3].setValue(-1,0,0);
-	angleAxis[4].setValue(0,1,0);
-	angleAxis[5].setValue(-1,0,0);
+	angleAxis[1].setValue(1,0,0);
+	angleAxis[2].setValue(0,-1,0);
+	angleAxis[3].setValue(1,0,0);
+	angleAxis[4].setValue(0,-1,0);
+	angleAxis[5].setValue(1,0,0);
 	for(int i = 0; i < NUM_ANGLES; i++)
 	{
 		angle[i] = new SoRotation;	
@@ -230,7 +238,6 @@ void Animator::createSceneGraph()
    // Add arm to root
 	root->addChild(arm);
 
-	viewAll();
 }
 
 float Animator::getAngle(int angleIndex)
@@ -250,9 +257,7 @@ void Animator::setAngleExpr(int angleIndex, std::string expr)
 {
 	angleCalc[angleIndex]->expression = expr.c_str();
 }
-void Animator::setMaterial(int color, double* a, double* d, double* s)
+SoMaterial* Animator::getMaterial(int color)
 {
-	colors[color]->ambientColor.setValue(a[0],a[1],a[2]);
-	colors[color]->diffuseColor.setValue(d[0],d[1],d[2]);
-	colors[color]->specularColor.setValue(s[0],s[1],s[2]);
+	return colors[color];
 }

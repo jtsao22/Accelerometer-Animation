@@ -67,3 +67,7 @@ void QCoin::viewAll()
 	if (eViewer)
 		eViewer->viewAll();
 }
+SoQtExaminerViewer* QCoin::getViewer()
+{
+	return eViewer;
+}

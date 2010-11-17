@@ -66,7 +66,6 @@ class Animator: public QCoin
 {
 	Q_OBJECT
 private:
-	SoSeparator* root;
 	SoSeparator* body;
 	SoSeparator* arm;
 	SoRotation* angle[NUM_ANGLES];
@@ -92,7 +91,7 @@ public:
 	void setAngleExpr(int, std::string);
 	~Animator();
 	void show();
-	void setMaterial(int, double*, double*, double*);
+	SoMaterial* getMaterial(int);
 public slots:
    void setAngle(int,int);
 	void tabSwitch(int);
