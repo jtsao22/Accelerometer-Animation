@@ -9,11 +9,12 @@
 #include <FreeForm.h>
 #include <MotionForm.h>
 #include <ColorForm.h>
+#include <ReadMATLAB.h>
 
 void Animator::defineWindows()
 {
 	//Total number of windows
-   num_windows = 3;
+   num_windows = 4;
    windows = new AbstractWindow*[num_windows];
 
    //Create FreeForm tab with index 0
@@ -24,6 +25,8 @@ void Animator::defineWindows()
 
    //Create MotionForm tab with index 1
    windows[2] = new ColorForm(this);
+
+   windows[3] = new ReadMATLAB(this);
 
 }
 
