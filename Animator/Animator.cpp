@@ -104,7 +104,7 @@ void Animator::createSceneGraph()
 	setRoot(root);
 	
 	//Set the time
-	//time = new SoElapsedTime;
+	time = new SoElapsedTime;
 
 	//Create the angles
    angleAxis[0].setValue(0,0,1);
@@ -118,8 +118,7 @@ void Animator::createSceneGraph()
 		angle[i] = new SoRotation;	
 		angleCalc[i] = new SoCalculator;
 		angleCompRot[i] = new SoComposeRotation;
-		angleTime[i] = new SoElapsedTime;
-		angleCalc[i]->a.connectFrom(&(angleTime[i]->timeOut));
+		angleCalc[i]->a.connectFrom(&(time->timeOut));
 		angleCompRot[i]->axis = angleAxis[i];
 		angleCompRot[i]->angle.connectFrom(&(angleCalc[i]->oa));
 		angle[i]->rotation.connectFrom(&(angleCompRot[i]->rotation));
@@ -257,14 +256,14 @@ void Animator::enableTime(bool enable)
 		for(i=0;i<NUM_ANGLES;i++)
 		{
 			angle[i]->rotation.enableConnection(1);
-			angleTime[i]->on = 1;
 		}
+			time->on = 1;
 	}
 	else
 	{
+		time->on = 0;
 		for(i=0;i<NUM_ANGLES;i++)
 		{
-			angleTime[i]->on = 0;
 			angle[i]->rotation.enableConnection(0);
 		}
 	}	
@@ -278,14 +277,11 @@ SoMaterial* Animator::getMaterial(int color)
 {
 	return colors[color];
 }
-void Animator::setAngleSpeed(int angleIndex, double speed)
+void Animator::setTimeSpeed(double speed)
 {
-	angleTime[angleIndex]->speed = speed;
+	time->speed = speed;
 }
 void Animator::resetTime()
 {
-	for(int i = 0; i < NUM_ANGLES; i++)
-	{
-		angleTime[i]->reset.touch();
-	}
+	time->reset.touch();
 }

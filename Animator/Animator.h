@@ -14,6 +14,7 @@
 #include <Inventor/engines/SoElapsedTime.h>
 #include <Inventor/engines/SoComposeRotation.h>
 #include <QTabWidget>
+#include <string>
 
 /*
  * Angles
@@ -72,8 +73,8 @@ private:
 	SbVec3f angleAxis[NUM_ANGLES];
 	SoCalculator* angleCalc[NUM_ANGLES];
 	SoComposeRotation* angleCompRot[NUM_ANGLES];
-	//SoElapsedTime* time;
-	SoElapsedTime* angleTime[NUM_ANGLES];
+	SoElapsedTime* time;
+//	SoElapsedTime* angleTime[NUM_ANGLES];
 	SoMaterial* colors[NUM_COLORS];
 	void createSceneGraph();
 
@@ -89,7 +90,7 @@ public:
 	Animator(QWidget* parent = 0);
 	float getAngle(int);
 	void setAngleExpr(int, std::string);
-	void setAngleSpeed(int, double);
+	void setTimeSpeed(double);
 	void enableTime(bool);
 	void resetTime();
 	~Animator();
