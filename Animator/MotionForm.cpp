@@ -1,10 +1,9 @@
 #include <MotionForm.h>
 #include <QStringList>
-#include <sstream>
 #include <QFile>
 #include <QTextStream>
 #include <QFileDialog>
-#include <QString>
+#include <sstream>
 
 //MotionForm
 MotionForm::MotionForm(Animator * newGfx):AbstractWindow(newGfx,"Motion Form"){}
@@ -104,15 +103,16 @@ void MotionForm::transitionFrom()
 	for(int i = 0; i < NUM_ANGLES; i++)
   	{
 		gfx->enableTime(0);
-   }
+   	}
 }    
 
 void MotionForm::updateMotion(void)
 {
   	double a,b, mean, amp, p, f;
-  	std::stringstream expression;
+	std::stringstream expression;
 	for(int i = 0; i < NUM_ANGLES; i++)
 	{
+	expression.str().clear();
    	a = tbl->item(i,0)->text().toDouble();
    	b = tbl->item(i,1)->text().toDouble();
    	p = tbl->item(i,2)->text().toDouble();
@@ -123,11 +123,11 @@ void MotionForm::updateMotion(void)
    	amp *= M_PI/180;
    	p *= M_PI/180;
    	f *= 2*M_PI;
-   	expression << "oa=" << mean << "+" << amp << "*cos(" << p << "+a);";
+   	expression << "oa=" << mean << "+" << amp << "*cos(" << p << "+" << f <<"*a);";
 		gfx->setAngleExpr(i,expression.str());
-		gfx->setAngleSpeed(i,f);
+		//gfx->setTimeSpeed(f);
 	}	
-	gfx->resetTime();
+	//gfx->resetTime();
 }
 
 void MotionForm::updateWithFile(void)
