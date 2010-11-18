@@ -91,7 +91,7 @@ void MotionForm::transitionTo()
 		   
 	for(int i = 0; i < NUM_ANGLES; i++)
   	{
-		gfx->enableAngle(i,1);
+		gfx->enableTime(1);
   	}
 }  
       
@@ -103,7 +103,7 @@ void MotionForm::transitionFrom()
 	resetButton->disconnect();
 	for(int i = 0; i < NUM_ANGLES; i++)
   	{
-		gfx->enableAngle(i,0);
+		gfx->enableTime(0);
    }
 }    
 
@@ -127,6 +127,7 @@ void MotionForm::updateMotion(void)
 		gfx->setAngleExpr(i,expression.str());
 		gfx->setAngleSpeed(i,f);
 	}	
+	gfx->resetTime();
 }
 
 void MotionForm::updateWithFile(void)

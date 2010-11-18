@@ -249,9 +249,25 @@ float Animator::getAngle(int angleIndex)
 	return angleRead;
 }
 
-void Animator::enableAngle(int angleIndex, bool enable)
+void Animator::enableTime(bool enable)
 {
-	angle[angleIndex]->rotation.enableConnection(enable);
+	int i;
+	if (enable)
+	{
+		for(i=0;i<NUM_ANGLES;i++)
+		{
+			angle[i]->rotation.enableConnection(1);
+			angleTime[i]->on = 1;
+		}
+	}
+	else
+	{
+		for(i=0;i<NUM_ANGLES;i++)
+		{
+			angleTime[i]->on = 0;
+			angle[i]->rotation.enableConnection(0);
+		}
+	}	
 }
 
 void Animator::setAngleExpr(int angleIndex, std::string expr)
@@ -265,4 +281,11 @@ SoMaterial* Animator::getMaterial(int color)
 void Animator::setAngleSpeed(int angleIndex, double speed)
 {
 	angleTime[angleIndex]->speed = speed;
+}
+void Animator::resetTime()
+{
+	for(int i = 0; i < NUM_ANGLES; i++)
+	{
+		angleTime[i]->reset.touch();
+	}
 }

@@ -88,9 +88,10 @@ private:
 public:
 	Animator(QWidget* parent = 0);
 	float getAngle(int);
-	void enableAngle(int, bool);
 	void setAngleExpr(int, std::string);
 	void setAngleSpeed(int, double);
+	void enableTime(bool);
+	void resetTime();
 	~Animator();
 	void show();
 	SoMaterial* getMaterial(int);
