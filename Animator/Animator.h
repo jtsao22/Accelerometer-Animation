@@ -72,7 +72,8 @@ private:
 	SbVec3f angleAxis[NUM_ANGLES];
 	SoCalculator* angleCalc[NUM_ANGLES];
 	SoComposeRotation* angleCompRot[NUM_ANGLES];
-	SoElapsedTime* time;
+	//SoElapsedTime* time;
+	SoElapsedTime* angleTime[NUM_ANGLES];
 	SoMaterial* colors[NUM_COLORS];
 	void createSceneGraph();
 
@@ -89,6 +90,7 @@ public:
 	float getAngle(int);
 	void enableAngle(int, bool);
 	void setAngleExpr(int, std::string);
+	void setAngleSpeed(int, double);
 	~Animator();
 	void show();
 	SoMaterial* getMaterial(int);

@@ -104,7 +104,7 @@ void Animator::createSceneGraph()
 	setRoot(root);
 	
 	//Set the time
-	time = new SoElapsedTime;
+	//time = new SoElapsedTime;
 
 	//Create the angles
    angleAxis[0].setValue(0,0,1);
@@ -118,7 +118,8 @@ void Animator::createSceneGraph()
 		angle[i] = new SoRotation;	
 		angleCalc[i] = new SoCalculator;
 		angleCompRot[i] = new SoComposeRotation;
-		angleCalc[i]->a.connectFrom(&(time->timeOut));
+		angleTime[i] = new SoElapsedTime;
+		angleCalc[i]->a.connectFrom(&(angleTime[i]->timeOut));
 		angleCompRot[i]->axis = angleAxis[i];
 		angleCompRot[i]->angle.connectFrom(&(angleCalc[i]->oa));
 		angle[i]->rotation.connectFrom(&(angleCompRot[i]->rotation));
@@ -260,4 +261,8 @@ void Animator::setAngleExpr(int angleIndex, std::string expr)
 SoMaterial* Animator::getMaterial(int color)
 {
 	return colors[color];
+}
+void Animator::setAngleSpeed(int angleIndex, double speed)
+{
+	angleTime[angleIndex]->speed = speed;
 }

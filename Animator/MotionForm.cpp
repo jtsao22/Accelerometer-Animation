@@ -123,8 +123,9 @@ void MotionForm::updateMotion(void)
    	amp *= M_PI/180;
    	p *= M_PI/180;
    	f *= 2*M_PI;
-   	expression << "oa=" << mean << "+" << amp << "*cos(" << p << "+" << f << "*a);";
+   	expression << "oa=" << mean << "+" << amp << "*cos(" << p << "+a);";
 		gfx->setAngleExpr(i,expression.str());
+		gfx->setAngleSpeed(i,f);
 	}	
 }
 
