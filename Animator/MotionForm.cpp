@@ -16,6 +16,8 @@ MotionForm::~MotionForm()
 	delete fileButton;
 	delete saveButton;
 	delete resetButton;
+	delete speedLabel;
+	delete speedText;
 }
 
 QWidget* MotionForm::createWindow()
@@ -23,6 +25,13 @@ QWidget* MotionForm::createWindow()
 	//Create MotionForm tab
 	window =  new QWidget;
 	window->setGeometry(TAB_X,TAB_Y,TAB_WIDTH,TAB_HEIGHT);
+	
+	//Create speed stuff
+	speedLabel = new QLabel("Speed",window);
+	speedLabel->setGeometry(60,180,70,30);
+	
+	speedText = new QTextEdit("1",window);
+	speedText->setGeometry(60,210,70,30);
 
 	//Create table
 	int i,j;
@@ -51,28 +60,28 @@ QWidget* MotionForm::createWindow()
    // Create Label for messages
    txtEdit = new QTextEdit(window);
    txtEdit->setReadOnly(1);
-   txtEdit->setGeometry(10,200,180,40);
+   txtEdit->setGeometry(10,250,180,40);
    txtEdit->show();
 
 	//Button for updating engines
 	goButton = new QPushButton("Go",window);
   	goButton->setFont(QFont("Times",18,QFont::Bold));
-  	goButton->setGeometry(10,250,180,40);
+  	goButton->setGeometry(10,300,180,40);
 
    // Button for loading to file
    fileButton = new QPushButton("Use File Data", window);
    fileButton->setFont(QFont("Times",18,QFont::Bold));
-   fileButton->setGeometry(10,300,180,40);
+   fileButton->setGeometry(10,350,180,40);
 
    // Button for saving to file
    saveButton = new QPushButton("Save to File", window);
    saveButton->setFont(QFont("Times",18,QFont::Bold));
-   saveButton->setGeometry(10,350,180,40);
+   saveButton->setGeometry(10,400,180,40);
 
    // Button for resetting
    resetButton = new QPushButton("Reset", window);
    resetButton->setFont(QFont("Times",18,QFont::Bold));
-   resetButton->setGeometry(10,400,180,40);
+   resetButton->setGeometry(10,450,180,40);
 
 	return window;
 }
@@ -113,6 +122,7 @@ void MotionForm::updateMotion(void)
 	for(int i = 0; i < NUM_ANGLES; i++)
 	{
 	expression.str().clear();
+	expression.str("");
    	a = tbl->item(i,0)->text().toDouble();
    	b = tbl->item(i,1)->text().toDouble();
    	p = tbl->item(i,2)->text().toDouble();
@@ -123,9 +133,9 @@ void MotionForm::updateMotion(void)
    	amp *= M_PI/180;
    	p *= M_PI/180;
    	f *= 2*M_PI;
-   	expression << "oa=" << mean << "+" << amp << "*cos(" << p << "+" << f <<"*a);";
-		gfx->setAngleExpr(i,expression.str());
-		//gfx->setTimeSpeed(f);
+   	expression << mean << "+" << amp << "*cos(" << p << "+" << f <<"*a)";
+	gfx->setAngleExpr(i,expression.str());
+	gfx->setTimeSpeed(speedText->toPlainText().toDouble());
 	}	
 	//gfx->resetTime();
 }

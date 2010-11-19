@@ -10,12 +10,15 @@
 #include <QTableWidget>
 #include <QPushButton>
 #include <QTextEdit>
+#include <QLabel>
 
 class MotionForm: public QObject, public AbstractWindow
 {
 	Q_OBJECT
 private:
 	QTableWidget* tbl;
+	QLabel* speedLabel;
+	QTextEdit* speedText;	
 	QPushButton* goButton;
 	QPushButton* fileButton;
 	QPushButton* saveButton;

@@ -9,6 +9,8 @@
 #include <FreeForm.h>
 #include <MotionForm.h>
 #include <ColorForm.h>
+#include <sstream>
+//#include <iostream>
 
 void Animator::defineWindows()
 {
@@ -99,31 +101,44 @@ void Animator::show()
 
 void Animator::createSceneGraph()
 {
+	int i;
 	//Create scene graph
 	SoSeparator* root = new SoSeparator;
 	setRoot(root);
 	
 	//Set the time
 	time = new SoElapsedTime;
+	softTime = new SoOneShot;	
+	softTime->duration = SbTime(1);
+	softTime->flags = SoOneShot::HOLD_FINAL;
+
+	//Initialize soft transition parameters
+	for(i=0;i < NUM_ANGLES;i++)
+	{
+		softTracker[i] = 0;
+		softExpr[i][0] = "0";
+		softExpr[i][1] = "0";
+	}
 
 	//Create the angles
-   angleAxis[0].setValue(0,0,1);
+	angleAxis[0].setValue(0,0,1);
 	angleAxis[1].setValue(1,0,0);
 	angleAxis[2].setValue(0,-1,0);
 	angleAxis[3].setValue(1,0,0);
 	angleAxis[4].setValue(0,-1,0);
 	angleAxis[5].setValue(1,0,0);
-	for(int i = 0; i < NUM_ANGLES; i++)
+	for(i = 0; i < NUM_ANGLES; i++)
 	{
 		angle[i] = new SoRotation;	
 		angleCalc[i] = new SoCalculator;
 		angleCompRot[i] = new SoComposeRotation;
 		angleCalc[i]->a.connectFrom(&(time->timeOut));
+		angleCalc[i]->b.connectFrom(&(softTime->ramp));
 		angleCompRot[i]->axis = angleAxis[i];
 		angleCompRot[i]->angle.connectFrom(&(angleCalc[i]->oa));
 		angle[i]->rotation.connectFrom(&(angleCompRot[i]->rotation));
 		angleCalc[i]->expression = "oa=0;";
-     	angle[i]->rotation.enableConnection(0);
+     		angle[i]->rotation.enableConnection(0);
 	}
 
 	//Define temp pointers
@@ -211,7 +226,7 @@ void Animator::createSceneGraph()
    arm->addChild(tempTranslation);
    arm->addChild(colors[0]);
 
-   for(int i = 0; i < 4; i++)
+   for(i = 0; i < 4; i++)
    {
       tempTranslation = new SoTranslation;
       tempTranslation->translation.setValue(SbVec3f(0.4,0, 0));
@@ -269,9 +284,16 @@ void Animator::enableTime(bool enable)
 	}	
 }
 
-void Animator::setAngleExpr(int angleIndex, std::string expr)
+void Animator::setAngleExpr(int angleIndex, std::string new_expr)
 {
-	angleCalc[angleIndex]->expression = expr.c_str();
+	bool tracker = softTracker[angleIndex];
+	std::stringstream expr;
+	expr << "oa=(1-b)*(" << softExpr[angleIndex][tracker] << ")+b*(" << new_expr << ");";
+//	std::cout << expr.str() << std::endl;
+	softTracker[angleIndex] = !tracker;
+	softExpr[angleIndex][!tracker] = new_expr;
+	angleCalc[angleIndex]->expression = expr.str().c_str();
+	softTime->trigger.touch();
 }
 SoMaterial* Animator::getMaterial(int color)
 {

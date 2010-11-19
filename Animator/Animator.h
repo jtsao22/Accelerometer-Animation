@@ -12,6 +12,7 @@
 #include <Inventor/nodes/SoMaterial.h>
 #include <Inventor/engines/SoCalculator.h>
 #include <Inventor/engines/SoElapsedTime.h>
+#include <Inventor/engines/SoOneShot.h>
 #include <Inventor/engines/SoComposeRotation.h>
 #include <QTabWidget>
 #include <string>
@@ -74,8 +75,10 @@ private:
 	SoCalculator* angleCalc[NUM_ANGLES];
 	SoComposeRotation* angleCompRot[NUM_ANGLES];
 	SoElapsedTime* time;
-//	SoElapsedTime* angleTime[NUM_ANGLES];
+	SoOneShot* softTime;
 	SoMaterial* colors[NUM_COLORS];
+	std::string softExpr[NUM_ANGLES][2];
+	bool softTracker[NUM_ANGLES]; 
 	void createSceneGraph();
 
 	//GUI stuff
