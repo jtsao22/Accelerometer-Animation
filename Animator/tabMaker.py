@@ -127,13 +127,13 @@ QWidget* {0}::createWindow()
 
 	return window;
 }}
-//{0} transitionTo: Create any Qt/Coin connections or enable Coin engines for Coin connections made in createWindow
+//{0} transitionTo: Place code here that should run every time the user switches to this tab
 void {0}::transitionTo()
 {{
 
 }}
 
-//{0} transitionFrom: Remove Qt/Coin connections or disable Coin engines that should not be present when leaving the {0} tab
+//{0} transitionFrom: Place code here that should run every time the user switches away from this tab
 void {0}::transitionFrom()
 {{
 
@@ -164,6 +164,6 @@ print('To complete the integration of your tab into the Animator, modify the def
 print('	(1) Increase the value of num_windows to account for your new tab');
 print('	(2) Insert your window into the windows array: windows[?] = new {0}(this);'.format(className));
 print('	    where ? is a valid integer index not used by any other tab.');
-print('Lastly, add #include <{0}.h> to the top of Animator.cpp');
+print('	(3) Add #include <{0}.h> to the top of Animator.cpp'.format(className));
 print('After this, simply type make to compile and you are good to go!');
 
