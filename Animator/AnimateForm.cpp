@@ -150,6 +150,7 @@ void AnimateForm::loop()
 void AnimateForm::playPress()
 {
 	timer->start();
+	scriptLine = 0;
 	loop();
 }
 
