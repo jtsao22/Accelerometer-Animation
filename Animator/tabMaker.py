@@ -164,6 +164,6 @@ print('To complete the integration of your tab into the Animator, modify the def
 print('	(1) Increase the value of num_windows to account for your new tab');
 print('	(2) Insert your window into the windows array: windows[?] = new {0}(this);'.format(className));
 print('	    where ? is a valid integer index not used by any other tab.');
-print('	(3) Add #include <{0}.h> to the top of Animator.cpp'.format(className));
+print('Lastly, add #include <{0}.h> to the top of Animator.cpp');
 print('After this, simply type make to compile and you are good to go!');
 
