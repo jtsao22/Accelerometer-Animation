@@ -9,5 +9,5 @@ INCLUDEPATH += .
 LIBS += -lCoin -lSoQt
 
 # Input
-HEADERS += AbstractWindow.h Animator.h FreeForm.h MotionForm.h QCoin.h ColorForm.h AnimateForm.h
-SOURCES += AbstractWindow.cpp Animator.cpp FreeForm.cpp main.cpp MotionForm.cpp QCoin.cpp ColorForm.cpp AnimateForm.cpp
+HEADERS += AbstractWindow.h Animator.h FreeForm.h 	MotionForm.h QCoin.h ColorForm.h
+SOURCES += AbstractWindow.cpp Animator.cpp FreeForm.cpp main.cpp MotionForm.cpp QCoin.cpp ColorForm.cpp

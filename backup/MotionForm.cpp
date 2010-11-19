@@ -69,12 +69,12 @@ QWidget* MotionForm::createWindow()
   	goButton->setGeometry(10,300,180,40);
 
    // Button for loading to file
-   fileButton = new QPushButton("Load", window);
+   fileButton = new QPushButton("Use File Data", window);
    fileButton->setFont(QFont("Times",18,QFont::Bold));
    fileButton->setGeometry(10,350,180,40);
 
    // Button for saving to file
-   saveButton = new QPushButton("Save", window);
+   saveButton = new QPushButton("Save to File", window);
    saveButton->setFont(QFont("Times",18,QFont::Bold));
    saveButton->setGeometry(10,400,180,40);
 
@@ -97,7 +97,10 @@ void MotionForm::transitionTo()
   	// Register resetButton click
   	QObject::connect(resetButton, SIGNAL(clicked()), this, SLOT(resetParams()));
 		   
-	gfx->enableTime(1);
+	for(int i = 0; i < NUM_ANGLES; i++)
+  	{
+		gfx->enableTime(1);
+  	}
 }  
       
 void MotionForm::transitionFrom()
@@ -106,7 +109,10 @@ void MotionForm::transitionFrom()
 	fileButton->disconnect();
 	saveButton->disconnect();
 	resetButton->disconnect();
-	gfx->enableTime(0);
+	for(int i = 0; i < NUM_ANGLES; i++)
+  	{
+		gfx->enableTime(0);
+   	}
 }    
 
 void MotionForm::updateMotion(void)
@@ -131,7 +137,6 @@ void MotionForm::updateMotion(void)
 	gfx->setAngleExpr(i,expression.str());
 	gfx->setTimeSpeed(speedText->toPlainText().toDouble());
 	}	
-	gfx->triggerSoft();
 	//gfx->resetTime();
 }
 

@@ -62,9 +62,6 @@
 
 #define NUM_COLORS 2
 
-#define SOFT_TIME 1
-#define UPDATE_TIME 2
-
 class AbstractWindow;
 
 class Animator: public QCoin
@@ -81,7 +78,7 @@ private:
 	SoOneShot* softTime;
 	SoMaterial* colors[NUM_COLORS];
 	std::string softExpr[NUM_ANGLES][2];
-	int softTracker[NUM_ANGLES][2]; 
+	bool softTracker[NUM_ANGLES]; 
 	void createSceneGraph();
 
 	//GUI stuff
@@ -103,9 +100,8 @@ public:
 	void show();
 	SoMaterial* getMaterial(int);
 public slots:
-	void setAngle(int,int);
+   void setAngle(int,int);
 	void tabSwitch(int);
-	void triggerSoft();
 
 signals:
 
