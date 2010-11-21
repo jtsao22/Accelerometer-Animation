@@ -316,17 +316,26 @@ void Animator::triggerSoft()
 {
 	bool tracker;
 	int trackStatus;
+	std::stringstream expr;
+
 	for(int i = 0; i < NUM_ANGLES; i++)
 	{
 		trackStatus = softTracker[i][1];
 		tracker = softTracker[i][0];
+
 		switch(trackStatus)
 		{
 			case 1:
 				softExpr[i][!tracker] = softExpr[i][tracker];
+				expr.str("");
+        			expr << "oa=" << softExpr[i][tracker] << ";";
+				angleCalc[i]->expression = expr.str().c_str();
+				
 			case 2:
 				softTracker[i][1]--;
 		}
+//		std::cout << "expr:" << i << "\tts:" << trackStatus << "\told:" << softExpr[i][!tracker] << "\tnew:" <<  softExpr[i][tracker] << std::endl;
 	}
+//	std::cout << std::endl;
 	softTime->trigger.touch();
 }

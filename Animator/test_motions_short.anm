@@ -1,0 +1,80 @@
+expr 0 M_PI/2
+expr 1 M_PI/180*30*cos(M_PI*a)
+expr 2 0
+expr 3 M_PI/180*(22.5 + 22.5*cos(M_PI*a))
+expr 4 M_PI/2
+expr 5 0
+1
+1
+2
+expr 1 M_PI/180*(22.5 + 67.5*cos(M_PI*a))
+1
+1
+2
+2
+expr 0 0
+expr 1 0
+expr 2 0
+expr 3 0
+expr 4 0
+expr 5 0
+1
+1
+expr 0 M_PI/180*(90 + 20*cos(M_PI*a))
+expr 1 0
+expr 2 M_PI/180*(75)
+expr 3 M_PI/180*(7.5 + 7.5*cos(M_PI*a))
+expr 4 0
+1
+1
+2
+2
+expr 0 M_PI/180*(85 + 55*cos(M_PI*a))
+1
+1
+2
+2
+expr 0 0
+expr 1 0
+expr 2 0
+expr 3 0
+expr 4 0
+expr 5 0
+1
+1
+expr 0 0
+expr 1 M_PI/180*(7.5 + 7.5*cos(M_PI*a))
+expr 2 0
+expr 3 M_PI/180*(85 + 25*cos(M_PI*a))
+expr 4 M_PI
+1
+1
+2
+2
+expr 3 M_PI/180*(75 + 65*cos(M_PI*a))
+1
+1
+2
+2
+expr 0 0
+expr 1 0
+expr 2 0
+expr 3 0
+expr 4 0
+expr 5 0
+1
+1
+expr 0 M_PI/180*(5.5 + 2.5*cos(M_PI*(1+a)))
+expr 1 0
+expr 2 M_PI/180*(5 + 25*cos(M_PI*a))
+expr 3 M_PI/2
+expr 4 0
+1
+1
+2
+2
+expr 2 M_PI/180*(10 + 60*cos(M_PI*a))
+1
+1
+2
+2
