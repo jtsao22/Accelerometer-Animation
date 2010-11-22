@@ -290,6 +290,11 @@ void Animator::enableTime(bool enable)
 	}	
 }
 
+double Animator::getTimeSpeed(void)
+{
+    return time->speed.getValue();
+}
+
 void Animator::setAngleExpr(int angleIndex, std::string new_expr)
 {
 	bool tracker = softTracker[angleIndex][0];

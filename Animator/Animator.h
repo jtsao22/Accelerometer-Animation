@@ -95,6 +95,7 @@ private:
 public:
 	Animator(QWidget* parent = 0);
 	float getAngle(int);
+    double getTimeSpeed(void);
 	void setAngleExpr(int, std::string);
 	void setTimeSpeed(double);
 	void enableTime(bool);

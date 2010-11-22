@@ -23,6 +23,7 @@ private:
 	QPushButton* fileButton;
 	QPushButton* saveButton;
 	QPushButton* resetButton;
+    QPushButton* convertButton;
    QTextEdit* txtEdit;
 public:
 	MotionForm(Animator*);
@@ -30,10 +31,12 @@ public:
 	void transitionTo();
 	void transitionFrom();
 	QWidget* createWindow();
+
 public slots:
 	void updateMotion(void);
    void updateWithFile(void);
    void saveFile(void);
    void resetParams(void);
+   void convertToAnm(void);
 };
 #endif

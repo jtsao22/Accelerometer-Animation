@@ -135,6 +135,10 @@ void AnimateForm::loop()
 				return;
 			}
 		}
+        // Support comments
+        else if(line.startsWith("//"));
+        // Disregard empty lines
+        else if(line.isEmpty());
 		else
 		{
 			gfx->setTimeSpeed(line.toDouble());
