@@ -238,7 +238,6 @@ void MotionForm::saveFile(void)
 
 void MotionForm::convertToAnm(void)
 {
-    bool fileExists = FALSE;
     QString ask("Enter file name to convert to");
     QString curdir(".");
     QString type("Animator Files (*.anm)");
@@ -250,8 +249,7 @@ void MotionForm::convertToAnm(void)
     QTextStream out(&file);
 
     // Check if file exists
-    fileExists = file.exists();
-    if(fileExists)
+    if(file.exists())
     {
         // Open file for appending
         txtEdit->setText("File already exists, appending!");
