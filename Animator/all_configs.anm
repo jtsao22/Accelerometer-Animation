@@ -1,4 +1,4 @@
-stepsize 2
+stepsize 4.0 
 // Created by MotionForm Converter
 expr 0 0.785398+0.785398*cos(0+0*a)
 expr 1 0.392699+1.1781*cos(0+3.14159*a)
@@ -6,6 +6,8 @@ expr 2 0+0*cos(0+0*a)
 expr 3 0.392699+0.392699*cos(0+3.14159*a)
 expr 4 0.785398+0.785398*cos(0+0*a)
 expr 5 0+0*cos(0+0*a)
+1
+1
 1
 // Appended by MotionForm Converter
 expr 0 1.48353+0.959931*cos(0+3.14159*a)
@@ -15,6 +17,8 @@ expr 3 0.1309+0.1309*cos(0+3.14159*a)
 expr 4 0+0*cos(0+0*a)
 expr 5 0+0*cos(0+0*a)
 1
+1
+1
 // Appended by MotionForm Converter
 expr 0 0+0*cos(0+0*a)
 expr 1 0.1309+0.1309*cos(0+3.14159*a)
@@ -23,6 +27,8 @@ expr 3 1.309+1.13446*cos(0+3.14159*a)
 expr 4 1.5708+1.5708*cos(0+0*a)
 expr 5 0+0*cos(0+0*a)
 1
+1
+1
 // Appended by MotionForm Converter
 expr 0 0.0959931+0.0436332*cos(3.14159+3.14159*a)
 expr 1 0+0*cos(0+0*a)
@@ -30,4 +36,6 @@ expr 2 0.174533+1.0472*cos(0+3.14159*a)
 expr 3 0.785398+0.785398*cos(0+0*a)
 expr 4 0+0*cos(0+0*a)
 expr 5 0+0*cos(0+0*a)
+1
+1
 1

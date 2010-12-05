@@ -63,7 +63,7 @@
 #define NUM_COLORS 2
 
 #define SOFT_TIME 1
-#define UPDATE_TIME 2
+#define UPDATE_TIME 1
 
 class AbstractWindow;
 
