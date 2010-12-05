@@ -116,6 +116,8 @@ void AnimateForm::loop()
 	QString line;
 	QRegExp regex;
 	bool doSoft = 0;
+    double step_size = 0;
+    char temp[10];
 	
 	int scriptSize = script.size();
 	while( scriptLine < scriptSize)
@@ -139,6 +141,22 @@ void AnimateForm::loop()
         else if(line.startsWith("//"));
         // Disregard empty lines
         else if(line.isEmpty());
+        else if(line.startsWith("stepsize"))
+        {
+            //regex.setPattern("^stepsize\\s");
+            //if(regex.indexIn(line) != -1)
+            //{
+            //    step_size = regex.cap(1).toDouble();
+            //    if(step_size < 1.0)
+            //        gfx->setSoftTime(step_size);
+            //    else
+            //        gfx->setSoftTime(1.0);
+            //    timer->setInterval(step_size*1000);
+            //    //sprintf(temp,"Step_size: %f\n", step_size*1000);
+            //    //txtEdit->setText(temp);
+            //    //timer->start(step_size * 1000);
+            //}
+        }
 		else
 		{
 			gfx->setTimeSpeed(line.toDouble());

@@ -317,6 +317,19 @@ void Animator::resetTime()
 {
 	time->reset.touch();
 }
+
+void Animator::setSoftTime(double soft_time)
+{
+	softTime->duration = SbTime(soft_time);
+	//softTime->flags = SoOneShot::HOLD_FINAL;
+    //softTime->trigger.touch();
+    //delete softTime;
+	//softTime = new SoOneShot;	
+	//softTime->duration = SbTime(soft_time);
+	//softTime->flags = SoOneShot::HOLD_FINAL;
+
+}
+
 void Animator::triggerSoft()
 {
 	bool tracker;

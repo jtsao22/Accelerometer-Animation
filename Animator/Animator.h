@@ -100,6 +100,7 @@ public:
 	void setTimeSpeed(double);
 	void enableTime(bool);
 	void resetTime();
+    void setSoftTime(double soft_time);
 	~Animator();
 	void show();
 	SoMaterial* getMaterial(int);

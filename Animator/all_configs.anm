@@ -1,3 +1,4 @@
+stepsize 2
 // Created by MotionForm Converter
 expr 0 0.785398+0.785398*cos(0+0*a)
 expr 1 0.392699+1.1781*cos(0+3.14159*a)
