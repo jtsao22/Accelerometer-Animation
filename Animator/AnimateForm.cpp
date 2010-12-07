@@ -137,27 +137,29 @@ void AnimateForm::loop()
 				return;
 			}
 		}
-        // Support comments
-        else if(line.startsWith("//"));
-        // Disregard empty lines
-        else if(line.isEmpty());
-        else if(line.startsWith("stepsize"))
-        {
-            regex.setPattern("^stepsize\\s+(\\d+(\\.\\d+)?)");
-            if(regex.indexIn(line) != -1)
-            {
-                step_size = regex.cap(1).toDouble();
-		txtEdit->setText("Stepsize = " + regex.cap(1));
-                if(step_size < 1.0)
-                    gfx->setSoftTime(step_size);
-                else
-                    gfx->setSoftTime(1.0);
-                timer->setInterval(step_size*1000);
-                //sprintf(temp,"Step_size: %f\n", step_size*1000);
-                //txtEdit->setText(temp);
-                //timer->start(step_size * 1000);
-            }
-        }
+        	// Support comments
+        	else if(line.startsWith("//"));
+        	// Disregard empty lines
+        	else if(line.isEmpty());
+        	else if(line.startsWith("stepsize"))
+        	{
+            		regex.setPattern("^stepsize\\s+(\\d+(\\.\\d+)?)");
+            		if(regex.indexIn(line) != -1)
+            		{
+                		step_size = regex.cap(1).toDouble();
+				txtEdit->setText("Stepsize = " + regex.cap(1));
+                		if(step_size < 1.0)
+                    			gfx->setSoftTime(step_size);
+                		else
+                    			gfx->setSoftTime(1.0);
+                		timer->setInterval(step_size*1000);
+                		//sprintf(temp,"Step_size: %f\n", step_size*1000);
+               	 		//txtEdit->setText(temp);
+               			//timer->start(step_size * 1000);
+            		}	
+        	}
+		else if(line.startsWith("~"))
+			return;
 		else
 		{
 			gfx->setTimeSpeed(line.toDouble());
