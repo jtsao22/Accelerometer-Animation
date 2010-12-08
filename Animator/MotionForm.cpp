@@ -110,6 +110,7 @@ void MotionForm::transitionTo()
       
 void MotionForm::transitionFrom()
 {        
+    // Disconnect buttons
 	goButton->disconnect();
 	fileButton->disconnect();
 	saveButton->disconnect();
@@ -130,6 +131,9 @@ void MotionForm::updateMotion(void)
    	    b = tbl->item(i,1)->text().toDouble();
    	    p = tbl->item(i,2)->text().toDouble();
    	    f = tbl->item(i,3)->text().toDouble();
+
+        // Calculate the new mean, amplitude, phase, and frequency
+        // and take the appropriate actions
    	    mean = (a+b)/2;
    	    amp = (b-a)/2;
    	    mean *= M_PI/180;
@@ -141,64 +145,68 @@ void MotionForm::updateMotion(void)
 	    gfx->setTimeSpeed(speedText->toPlainText().toDouble());
 	}	
 	gfx->triggerSoft();
-	//gfx->resetTime();
 }
 
 
 void MotionForm::updateWithFile(void)
 {
-   int row = 0;
-   int col = 0;
-	QString filename = QFileDialog::getOpenFileName(window,"Select Motion File",".","Motion Files (*.mot)");
-   QFile file(filename.toAscii().data());
-   QString token;
-   
-   
-   // Check if file exists
-   if(!file.exists())
-   {
-       txtEdit->setText("File does not exist");
-       return;
-   }
-   
-   // Open file
-   if(!file.open( QIODevice::ReadOnly))
-   {
-       txtEdit->setText("Error: Problem Opening file");
-       return;
-   }
-   else
-       txtEdit->setText("File opened Successfully!");
+    int row = 0;
+    int col = 0;
 
-   QTextStream in(&file);
+    // Get motion file
+    QString filename = QFileDialog::getOpenFileName(window,"Select Motion File",".","Motion Files (*.mot)");
+    QFile file(filename.toAscii().data());
+    QString token;
+    
+    // Check if file exists
+    if(!file.exists())
+    {
+        txtEdit->setText("File does not exist");
+        return;
+    }
+    
+    // Open file
+    if(!file.open( QIODevice::ReadOnly))
+    {
+        txtEdit->setText("Error: Problem Opening file");
+        return;
+    }
+    else
+        txtEdit->setText("File opened Successfully!");
 
-   in >> token;
-   while(token != NULL)
-   {
-       tbl->item(row,col)->setText(token);
-       col++;
-       if(col == NUM_PARAMS)
-       {
-           col = 0;
-           row++;
-       }
+    QTextStream in(&file);
 
-       if(row > NUM_ANGLES)
-       {
-           txtEdit->setText("File is corrupt");
-			  file.close();
-           return;
-       }
-       in >> token;
-   }
-   file.close();
+    // Read in from the file token by token (whitespace separated words)
+    in >> token;
+    while(token != NULL)
+    {
+        // Set the tokens into the table;
+        tbl->item(row,col)->setText(token);
+        col++;
+        if(col == NUM_PARAMS)
+        {
+            col = 0;
+            row++;
+        }
 
-   updateMotion();
+        if(row > NUM_ANGLES)
+        {
+            txtEdit->setText("File is corrupt");
+     		  file.close();
+            return;
+        }
+        in >> token;
+    }
+
+    // Close and update
+    file.close();
+    updateMotion();
 
 }
 
 void MotionForm::resetParams(void)
 {
+    // Resets the table to zero and updates
     for(int col = 0; col < NUM_PARAMS; col++)
     {
         for(int row = 0; row < NUM_ANGLES; row++)
@@ -211,17 +219,21 @@ void MotionForm::resetParams(void)
 
 void MotionForm::saveFile(void)
 {
+    // Get filename to save to
 	QString filename = QFileDialog::getSaveFileName(window,"Enter file name to save",".","Motion Files (*.mot)");
 	if (!filename.endsWith(".txt"))
 		filename.append(".txt");
-   QFile file(filename.toAscii().data());
- // Create file
-   if(!file.open( QIODevice::WriteOnly))
-   {
-       txtEdit->setText("Error: Problem Opening file");
-       return;
-   }
-   QTextStream out(&file);
+
+    // Open file
+    QFile file(filename.toAscii().data());
+    if(!file.open( QIODevice::WriteOnly))
+    {
+        txtEdit->setText("Error: Problem Opening file");
+        return;
+    }
+
+    // Output table values to the file
+    QTextStream out(&file);
 	int i, j;
 	for(i = 0; i < NUM_ANGLES; i++)
 	{
@@ -238,6 +250,7 @@ void MotionForm::saveFile(void)
 
 void MotionForm::convertToAnm(void)
 {
+    // Prompt for file to save to
     QString ask("Enter file name to convert to");
     QString curdir(".");
     QString type("Animator Files (*.anm)");
@@ -275,6 +288,22 @@ void MotionForm::convertToAnm(void)
   	double a,b, mean, amp, p, f;
 	for(int i = 0; i < NUM_ANGLES; i++)
 	{
+<<<<<<< HEAD
+   	    a = tbl->item(i,0)->text().toDouble();
+   	    b = tbl->item(i,1)->text().toDouble();
+   	    p = tbl->item(i,2)->text().toDouble();
+   	    f = tbl->item(i,3)->text().toDouble();
+        // Calculate mean, amplitude, phase, and frequency and set it into a
+   	    mean = (a+b)/2;
+   	    amp = (b-a)/2;
+   	    mean *= M_PI/180;
+   	    amp *= M_PI/180;
+   	    p *= M_PI/180;
+   	    f *= 2*M_PI;
+        out << "\n";
+        out << "expr " << i << " ";
+   	    out << mean << "+" << amp << "*cos(" << p << "+" << f <<"*a)";
+=======
    		a = tbl->item(i,0)->text().toDouble();
    	    	b = tbl->item(i,1)->text().toDouble();
    	    	p = tbl->item(i,2)->text().toDouble();
@@ -284,6 +313,7 @@ void MotionForm::convertToAnm(void)
         	out << "\n";
 		out << "expr " << i << " ";
    	    	out << "M_PI/180*(" << mean << "+" << amp << "*cos(M_PI*(" << p << "/180+" << f <<"*2*a)))";
+>>>>>>> 5d77149fa2e71f0a6749416282caf55a140d1fb5
 	}	
 	out << "\n" << gfx->getTimeSpeed();
 	file.close();

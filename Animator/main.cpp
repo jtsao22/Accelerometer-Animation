@@ -17,13 +17,13 @@ int main(int argc, char ** argv)
 	mainWindow->resize(1024,768);
 	
 	//Create big text box for no reason
-   QTextEdit* txtEdit = new QTextEdit(mainWindow);
-   txtEdit->setReadOnly(1);
-   txtEdit->setGeometry(240,45,770,50);
+    QTextEdit* txtEdit = new QTextEdit(mainWindow);
+    txtEdit->setReadOnly(1);
+    txtEdit->setGeometry(240,45,770,50);
 	txtEdit->setFont(QFont("Times",18,QFont::Bold));
 	txtEdit->setText("EE180D Animator");
 	txtEdit->setAlignment(Qt::AlignCenter);
-   txtEdit->show();
+    txtEdit->show();
 
 	//Create an About message box
 	QMessageBox* aboutDialog = new QMessageBox;
@@ -49,7 +49,7 @@ int main(int argc, char ** argv)
 	
 	Animator* gfx = new Animator(mainWindow);
 
-   SoQt::show(mainWindow);
+    SoQt::show(mainWindow);
   	SoQt::mainLoop();
 
 
