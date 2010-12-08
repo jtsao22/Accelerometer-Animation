@@ -16,7 +16,7 @@ MotionForm::~MotionForm()
 	delete fileButton;
 	delete saveButton;
 	delete resetButton;
-    delete convertButton;
+	delete convertButton;
 	delete speedLabel;
 	delete speedText;
 }
@@ -275,21 +275,17 @@ void MotionForm::convertToAnm(void)
   	double a,b, mean, amp, p, f;
 	for(int i = 0; i < NUM_ANGLES; i++)
 	{
-   	    a = tbl->item(i,0)->text().toDouble();
-   	    b = tbl->item(i,1)->text().toDouble();
-   	    p = tbl->item(i,2)->text().toDouble();
-   	    f = tbl->item(i,3)->text().toDouble();
-   	    mean = (a+b)/2;
-   	    amp = (b-a)/2;
-   	    mean *= M_PI/180;
-   	    amp *= M_PI/180;
-   	    p *= M_PI/180;
-   	    f *= 2*M_PI;
-        out << "\n";
-        out << "expr " << i << " ";
-   	    out << mean << "+" << amp << "*cos(" << p << "+" << f <<"*a)";
+   		a = tbl->item(i,0)->text().toDouble();
+   	    	b = tbl->item(i,1)->text().toDouble();
+   	    	p = tbl->item(i,2)->text().toDouble();
+   	    	f = tbl->item(i,3)->text().toDouble();
+   	    	mean = (a+b)/2;
+   	    	amp = (b-a)/2;
+        	out << "\n";
+		out << "expr " << i << " ";
+   	    	out << "M_PI/180*(" << mean << "+" << amp << "*cos(M_PI*(" << p << "/180+" << f <<"*2*a)))";
 	}	
-    out << "\n" << gfx->getTimeSpeed();
+	out << "\n" << gfx->getTimeSpeed();
 	file.close();
 	txtEdit->setText("File successfully written");	
 

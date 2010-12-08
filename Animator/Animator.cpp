@@ -264,9 +264,10 @@ void Animator::createSceneGraph()
 float Animator::getAngle(int angleIndex)
 {
 	SbVec3f axisRead;
-	float angleRead;
+	float angleRead,sign;
 	angle[angleIndex]->rotation.getValue(axisRead,angleRead);
-	return angleRead;
+	sign = axisRead.dot(angleAxis[angleIndex]);
+	return angleRead*(-1+2*(sign>=0));
 }
 
 void Animator::enableTime(bool enable)

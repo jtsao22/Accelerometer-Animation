@@ -51,11 +51,13 @@ return window;
 
 void FreeForm::transitionTo()
 {
+	double a;
 	for(int i = 0; i < NUM_ANGLES; i++)
 	{
 		QObject::connect(sldAngle[i],SIGNAL(valueChanged(int)),sldAngle[i],SLOT(detectUpdate(int)));
   		QObject::connect(sldAngle[i],SIGNAL(valueChanged(int)),lcdAngle[i],SLOT(display(int)));
-		sldAngle[i]->setValue(((int)(360.5 + 180*(gfx->getAngle(i)/M_PI))) % 360);
+		a = gfx->getAngle(i);
+		sldAngle[i]->setValue(((int) (180/M_PI*a) ) % 360);
   		QObject::connect(sldAngle[i],SIGNAL(sendUpdate(int,int)),gfx,SLOT(setAngle(int,int)));
 	}			
 }
