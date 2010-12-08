@@ -1,0 +1,8 @@
+// Created by MotionForm Converter
+expr 0 M_PI/180*(-45+45*cos(M_PI*(90/180+0.6*2*a)))
+expr 1 M_PI/180*(112.5+157.5*cos(M_PI*(0/180+0.6*2*a)))
+expr 2 M_PI/180*(0+0*cos(M_PI*(0/180+0*2*a)))
+expr 3 M_PI/180*(22.5+22.5*cos(M_PI*(0/180+0.6*2*a)))
+expr 4 M_PI/180*(10+10*cos(M_PI*(0/180+0*2*a)))
+expr 5 M_PI/180*(0+0*cos(M_PI*(0/180+0*2*a)))
+1
