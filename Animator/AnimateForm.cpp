@@ -105,9 +105,7 @@ void AnimateForm::loadFile(void)
 	script.clear();
 
 	while(!in.atEnd())
-	{
 		 script << in.readLine();
-	}
 	file.close();
 	scriptLine = 0;
 }
@@ -120,11 +118,15 @@ void AnimateForm::loop()
 	double step_size = 0;
 	
 	int scriptSize = script.size();
+
 	while( scriptLine < scriptSize)
 	{	
+        // Read script read in by load
 		line = script[scriptLine++];
 		if (line.startsWith("expr"))
 		{	
+            // If its an expr line, set the angle expression with the angle
+            // number and the expression
 			regex.setPattern("^expr\\s+(\\d+)\\s+(\\S.*)$");
 			if (regex.indexIn(line) != -1)
 			{
@@ -137,33 +139,31 @@ void AnimateForm::loop()
 				return;
 			}
 		}
-        	// Support comments
-        	else if(line.startsWith("//"));
-        	// Disregard empty lines
-        	else if(line.isEmpty());
-        	else if(line.startsWith("stepsize"))
-        	{
-            		regex.setPattern("^stepsize\\s+(\\d+(\\.\\d+)?)");
-            		if(regex.indexIn(line) != -1)
-            		{
-                		step_size = regex.cap(1).toDouble();
-				txtEdit->setText("Stepsize = " + regex.cap(1));
-                		if(step_size < 1.0)
-                    			gfx->setSoftTime(step_size);
-                		else
-                    			gfx->setSoftTime(1.0);
-                		timer->setInterval(step_size*1000);
-                		//sprintf(temp,"Step_size: %f\n", step_size*1000);
-               	 		//txtEdit->setText(temp);
-               			//timer->start(step_size * 1000);
-            		}	
-        	}
+        // Support comments
+        else if(line.startsWith("//"));
+        // Disregard empty lines
+        else if(line.isEmpty());
+        else if(line.startsWith("stepsize"))
+        {
+            // If stepsize, sets the soft time and timer interval
+            regex.setPattern("^stepsize\\s+(\\d+(\\.\\d+)?)");
+            if(regex.indexIn(line) != -1)
+            {
+                step_size = regex.cap(1).toDouble();
+                txtEdit->setText("Stepsize = " + regex.cap(1));
+                if(step_size < 1.0)
+                    gfx->setSoftTime(step_size);
+                else
+                    gfx->setSoftTime(1.0);
+                timer->setInterval(step_size*1000);
+            }	
+        }
 		else if(line.startsWith("~"))
 			return;
 		else
 		{
+            // if the line only includes a number, change the speed
 			gfx->setTimeSpeed(line.toDouble());
-			//txtEdit->setText("Speed = " + line);
 			if (doSoft)
 				gfx->triggerSoft();
 			return;

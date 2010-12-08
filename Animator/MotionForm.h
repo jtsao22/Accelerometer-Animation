@@ -24,7 +24,7 @@ private:
 	QPushButton* saveButton;
 	QPushButton* resetButton;
     QPushButton* convertButton;
-   QTextEdit* txtEdit;
+    QTextEdit* txtEdit;
 public:
 	MotionForm(Animator*);
 	~MotionForm();
@@ -33,10 +33,10 @@ public:
 	QWidget* createWindow();
 
 public slots:
-	void updateMotion(void);
-   void updateWithFile(void);
-   void saveFile(void);
-   void resetParams(void);
-   void convertToAnm(void);
+    void updateMotion(void);
+    void updateWithFile(void);
+    void saveFile(void);
+    void resetParams(void);
+    void convertToAnm(void);
 };
 #endif
