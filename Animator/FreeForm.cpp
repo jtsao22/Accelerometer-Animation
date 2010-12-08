@@ -46,16 +46,6 @@ QWidget* FreeForm::createWindow()
 
 void FreeForm::transitionTo()
 {
-<<<<<<< HEAD
-    for(int i = 0; i < NUM_ANGLES; i++)
-    {
-        // Connections changing the angles if the sliders changed
-        QObject::connect(sldAngle[i],SIGNAL(valueChanged(int)),sldAngle[i],SLOT(detectUpdate(int)));
-        QObject::connect(sldAngle[i],SIGNAL(valueChanged(int)),lcdAngle[i],SLOT(display(int)));
-        sldAngle[i]->setValue(((int)(360.5 + 180*(gfx->getAngle(i)/M_PI))) % 360);
-        QObject::connect(sldAngle[i],SIGNAL(sendUpdate(int,int)),gfx,SLOT(setAngle(int,int)));
-    }			
-=======
 	double a;
 	for(int i = 0; i < NUM_ANGLES; i++)
 	{
@@ -65,7 +55,6 @@ void FreeForm::transitionTo()
 		sldAngle[i]->setValue(((int) (180/M_PI*a) ) % 360);
   		QObject::connect(sldAngle[i],SIGNAL(sendUpdate(int,int)),gfx,SLOT(setAngle(int,int)));
 	}			
->>>>>>> 5d77149fa2e71f0a6749416282caf55a140d1fb5
 }
 
 void FreeForm::transitionFrom()

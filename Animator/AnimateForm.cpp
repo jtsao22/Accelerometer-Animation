@@ -199,54 +199,6 @@ void AnimateForm::loop()
 
 	while( scriptLine < scriptSize)
 	{	
-<<<<<<< HEAD
-        // Read script read in by load
-		line = script[scriptLine++];
-		if (line.startsWith("expr"))
-		{	
-            // If its an expr line, set the angle expression with the angle
-            // number and the expression
-			regex.setPattern("^expr\\s+(\\d+)\\s+(\\S.*)$");
-			if (regex.indexIn(line) != -1)
-			{
-				gfx->setAngleExpr(regex.cap(1).toInt(),regex.cap(2).toStdString());
-				doSoft = 1;
-			}
-			else
-			{
-				txtEdit->setText("Error reading line");
-				return;
-			}
-		}
-        // Support comments
-        else if(line.startsWith("//"));
-        // Disregard empty lines
-        else if(line.isEmpty());
-        else if(line.startsWith("stepsize"))
-        {
-            // If stepsize, sets the soft time and timer interval
-            regex.setPattern("^stepsize\\s+(\\d+(\\.\\d+)?)");
-            if(regex.indexIn(line) != -1)
-            {
-                step_size = regex.cap(1).toDouble();
-                txtEdit->setText("Stepsize = " + regex.cap(1));
-                if(step_size < 1.0)
-                    gfx->setSoftTime(step_size);
-                else
-                    gfx->setSoftTime(1.0);
-                timer->setInterval(step_size*1000);
-            }	
-        }
-		else if(line.startsWith("~"))
-			return;
-		else
-		{
-            // if the line only includes a number, change the speed
-			gfx->setTimeSpeed(line.toDouble());
-			if (doSoft)
-				gfx->triggerSoft();
-			return;
-=======
 		switch (parse(script[scriptLine++]))
 		{
 			case 2:
@@ -254,7 +206,6 @@ void AnimateForm::loop()
 				gfx->setTimeSpeed(0);
 			case 1:
 				return;
->>>>>>> 5d77149fa2e71f0a6749416282caf55a140d1fb5
 		}
 	}
 	stopPress();
