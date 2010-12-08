@@ -1,0 +1,21 @@
+expr 0 M_PI/180*(90 + 20*cos(M_PI*a))
+expr 1 0
+expr 2 M_PI/180*(75)
+expr 3 M_PI/180*(7.5 + 7.5*cos(M_PI*a))
+expr 4 0
+expr 5 0
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
