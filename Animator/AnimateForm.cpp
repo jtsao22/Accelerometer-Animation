@@ -10,7 +10,7 @@ int AnimateForm::parse(QString line)
 {
 	//Return Value
 	// 0 = Scan Next Line Immediately
-	// 1 = Wait for StepSize before scanning
+	// 1 = Wait for StepSize before scanning next line
 	// 2 = Error occurred, stop animation
 
 
