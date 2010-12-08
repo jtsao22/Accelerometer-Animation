@@ -19,7 +19,7 @@
  * 
  */
 
-enum AnimateState { STOPPED, PLAYING, PAUSED };
+//enum AnimateState { STOPPED, PLAYING, PAUSED };
 
 class AnimateForm: public QObject, public AbstractWindow
 {
@@ -32,8 +32,10 @@ private:
 	QPushButton *stopButton;
 	QTimer* timer;
 	QStringList script;
-	AnimateState state;
+	//AnimateState state;
 	int scriptLine;
+	bool doSoft;
+	int parse(QString line);
 	
 public:
 	AnimateForm(Animator*);

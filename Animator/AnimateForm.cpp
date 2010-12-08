@@ -5,6 +5,88 @@
 #include <QRegExp>
 
 
+//Parsing Rules
+int AnimateForm::parse(QString line)
+{
+	//Return Value
+	// 0 = Scan Next Line Immediately
+	// 1 = Wait for StepSize before scanning
+	// 2 = Error occurred, stop animation
+
+
+	QRegExp regex;
+	double stepSize = 0;
+        // Disregard comments and empty lines
+        if(line.startsWith("//") || line.isEmpty());
+	//Angle Expressions
+	else if (line.startsWith("expr"))
+	{	
+		/* Syntax: expr N S
+		 * N = index of angle (integer)
+		 * S = string expression
+		 */
+		regex.setPattern("^expr\\s+(\\d+)\\s+(\\S.*)$");
+		if (regex.indexIn(line) != -1)
+		{
+			gfx->setAngleExpr(regex.cap(1).toInt(),regex.cap(2).toStdString());
+			doSoft = 1;
+		}
+		else
+		{
+			return 2;
+		}
+	}
+	//Step Size Expressions
+       	else if(line.startsWith("stepsize"))
+       	{
+		/* Syntax: stepsize T
+		 * T = number of seconds between windows (floating point)
+		 */
+     		regex.setPattern("^stepsize\\s+(\\d+(\\.\\d+)?)");
+       		if(regex.indexIn(line) != -1)
+         	{
+               		stepSize = regex.cap(1).toDouble();
+			//txtEdit->setText("Stepsize = " + regex.cap(1));
+               		if(stepSize < 1.0)
+               			gfx->setSoftTime(stepSize);
+               		else
+                 	 	gfx->setSoftTime(1.0);
+                	timer->setInterval(stepSize*1000);
+            	}	
+		else
+		{
+			return 2;
+		}
+        }
+	else
+	{
+		/* Dynamic Parameters
+		 * Sequence of floating point values or tildes
+		 */
+		regex.setPattern("^\\s*((?:\\d+(?:\\.\\d+)?|~)(?:\\s+|$))+");
+       		if(regex.indexIn(line) != -1)
+		{
+			//Use regex.cap(N) to get the Nth dynamic parameter as a Q string with N starting from 1
+
+			//Dynamic Parameter 1
+			if (!regex.cap(1).startsWith("~"))
+				gfx->setTimeSpeed(regex.cap(1).toDouble());
+
+			//txtEdit->setText("Speed = " + regex.cap(1));
+		}
+		else
+		{
+			return 2;
+		}
+
+		if (doSoft)
+			gfx->triggerSoft();
+		return 1;
+	}
+	return 0;
+}
+
+
 //AnimateForm Constructor: Most likely you do not need to modify this
 AnimateForm::AnimateForm(Animator * newGfx):AbstractWindow(newGfx,"Animate"){}
 
@@ -24,7 +106,7 @@ QWidget* AnimateForm::createWindow()
 	timer->setInterval(UPDATE_TIME*1000);
 
 	//Set initial status
-	state = STOPPED;
+	//state = STOPPED;
 
 	// Create Label for messages
 	txtEdit = new QTextEdit(window);
@@ -112,15 +194,12 @@ void AnimateForm::loadFile(void)
 
 void AnimateForm::loop()
 {
-	QString line;
-	QRegExp regex;
-	bool doSoft = 0;
-	double step_size = 0;
-	
+	doSoft = 0;
 	int scriptSize = script.size();
 
 	while( scriptLine < scriptSize)
 	{	
+<<<<<<< HEAD
         // Read script read in by load
 		line = script[scriptLine++];
 		if (line.startsWith("expr"))
@@ -167,6 +246,15 @@ void AnimateForm::loop()
 			if (doSoft)
 				gfx->triggerSoft();
 			return;
+=======
+		switch (parse(script[scriptLine++]))
+		{
+			case 2:
+				txtEdit->setText("Error parsing line");
+				gfx->setTimeSpeed(0);
+			case 1:
+				return;
+>>>>>>> 5d77149fa2e71f0a6749416282caf55a140d1fb5
 		}
 	}
 	stopPress();
