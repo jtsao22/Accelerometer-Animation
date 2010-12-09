@@ -20,6 +20,8 @@ For Windows or Mac, see the respective sites for each library to get installatio
 http://www.coin3d.org/
 http://qt.nokia.com/products/
 
+Please see the Animator_User_Guide.pdf for more information.
+
 These sites also provide excellent documentation for Coin and Qt.
 
 Also recommended for learning Coin: web books on Open Inventor (Coin uses the Open Inventor API):
