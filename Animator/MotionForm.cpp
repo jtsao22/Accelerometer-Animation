@@ -286,7 +286,8 @@ void MotionForm::convertToAnm(void)
     }
 		
   	double a,b, mean, amp, p, f;
-	for(int i = 0; i < NUM_ANGLES; i++)
+    int i;
+	for(i = 0; i < NUM_ANGLES; i++)
 	{
    		a = tbl->item(i,0)->text().toDouble();
    	    	b = tbl->item(i,1)->text().toDouble();
@@ -298,7 +299,9 @@ void MotionForm::convertToAnm(void)
 		out << "expr " << i << " ";
    	    	out << "M_PI/180*(" << mean << "+" << amp << "*cos(M_PI*(" << p << "/180+" << f <<"*2*a)))";
 	}	
-	out << "\n" << gfx->getTimeSpeed();
+
+    for(i = 0; i < 5; i++)
+	    out << "\n" << gfx->getTimeSpeed();
 	file.close();
 	txtEdit->setText("File successfully written");	
 
