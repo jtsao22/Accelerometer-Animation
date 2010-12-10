@@ -221,8 +221,8 @@ void MotionForm::saveFile(void)
 {
     // Get filename to save to
 	QString filename = QFileDialog::getSaveFileName(window,"Enter file name to save",".","Motion Files (*.mot)");
-	if (!filename.endsWith(".txt"))
-		filename.append(".txt");
+	if (!filename.endsWith(".mot"))
+		filename.append(".mot");
 
     // Open file
     QFile file(filename.toAscii().data());
